@@ -3,404 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>케어루프 - 스마트 건강 퀘스트</title>
+    <title>임영웅 팬 퀘스트 & 포도송이</title>
     <style>
         :root {
-            --primary: #7B1FA2;
-            --primary-light: #F3E5F5;
-            --accent: #FFD54F;
-            --bg: #F8F9FA;
-            --card: #FFFFFF;
-            --text: #212121;
-            --text-muted: #666666;
-            --danger: #D32F2F;
+            --hero-blue: #2b59c3;
+            --hero-light-blue: #e8f0fe;
+            --grape-purple: #8a2be2;
         }
 
         body {
-            font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            background-color: #f5f7fa;
             margin: 0;
-            padding: 0;
-            background-color: var(--bg);
-            color: var(--text);
+            padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* 스마트폰 화면 프레임 */
-        .phone-container {
+        .container {
+            max-width: 500px;
             width: 100%;
-            max-width: 420px;
-            min-height: 100vh;
-            background-color: var(--card);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            position: relative;
-            padding-bottom: 40px;
-        }
-
-        /* 상단 팬 테마 헤더 (임영웅/트로트 가수 팬덤 테마) */
-        .hero-header {
-            background: linear-gradient(135deg, #8E24AA, #D81B60);
-            color: white;
-            padding: 25px 20px 20px;
-            border-bottom-left-radius: 24px;
-            border-bottom-right-radius: 24px;
-            text-align: center;
-            position: relative;
-        }
-
-        .hero-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-color: white;
-            margin: 0 auto 10px;
-            border: 3px solid var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .hero-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 5px 0;
-        }
-
-        .hero-sub {
-            font-size: 13px;
-            opacity: 0.9;
-        }
-
-        /* 스마트폰 알림 팝업 스타일 */
-        .push-notification {
-            background-color: white;
-            margin: 15px 20px -10px;
-            padding: 14px 16px;
+            background: white;
+            padding: 20px;
             border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-left: 5px solid var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             position: relative;
-            z-index: 10;
         }
 
-        .push-icon {
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--hero-light-blue);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--hero-blue);
+            margin: 0 0 5px 0;
             font-size: 24px;
         }
 
-        .push-content {
-            flex: 1;
-        }
-
-        .push-title {
-            font-size: 13px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 2px;
-        }
-
-        .push-text {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        /* 포도알 퀘스트 보드 */
-        .quest-card {
-            background: white;
-            margin: 25px 20px 15px;
-            padding: 20px;
+        /* 이스터에그 스페셜 버튼 */
+        .easter-trigger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 1px solid var(--hero-blue);
+            color: var(--hero-blue);
             border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #E0E0E0;
-        }
-
-        .quest-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .quest-title {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .quest-count {
-            font-size: 14px;
-            color: var(--primary);
-            font-weight: bold;
-            background: var(--primary-light);
             padding: 4px 10px;
-            border-radius: 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .grape-grid {
+        .easter-trigger:hover {
+            background: var(--hero-blue);
+            color: white;
+        }
+
+        /* 포도송이 스티커판 */
+        .grape-board {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            background: #faf8ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
             justify-items: center;
         }
 
-        .grape-item {
-            width: 40px;
-            height: 40px;
+        .grape {
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background-color: #E0E0E0;
+            background: #e0e0e0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            color: #757575;
             font-weight: bold;
+            color: #888;
             cursor: pointer;
-            transition: all 0.2s;
+            user-select: none;
+            transition: transform 0.2s, background-color 0.3s;
         }
 
-        .grape-item.done {
-            background: radial-gradient(circle at 30% 30%, #AB47BC, #6A1B9A);
+        .grape.active {
+            background: var(--grape-purple);
             color: white;
-            box-shadow: 0 2px 6px rgba(123, 31, 162, 0.4);
+            box-shadow: 0 2px 8px rgba(138, 43, 226, 0.4);
             transform: scale(1.05);
         }
 
-        /* 오늘 기록 퀘스트 체크 */
-        .input-section {
-            padding: 0 20px;
+        /* 퀘스트 리스트 */
+        .quest-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
-        .section-label {
-            font-size: 15px;
-            font-weight: bold;
-            margin: 15px 0 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .pain-slider-container {
-            background: white;
-            padding: 15px;
-            border-radius: 16px;
-            border: 1px solid #E0E0E0;
-        }
-
-        .pain-value {
-            text-align: center;
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            accent-color: var(--primary);
-        }
-
-        .symptom-check {
-            background: white;
-            padding: 14px 16px;
-            border-radius: 16px;
-            border: 1px solid #E0E0E0;
+        .quest-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 10px;
+            padding: 12px;
+            background: var(--hero-light-blue);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .quest-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
             cursor: pointer;
         }
 
-        .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, #7B1FA2, #512DA8);
-            color: white;
-            padding: 16px;
-            border: none;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(123, 31, 162, 0.3);
-        }
-
-        /* 진단 자동 예약 모달 팝업 */
+        /* 이스터에그 모달 */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.6);
             display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            padding: 20px;
         }
 
         .modal-content {
             background: white;
-            width: 100%;
-            max-width: 340px;
-            border-radius: 24px;
-            padding: 24px;
+            padding: 20px;
+            border-radius: 16px;
+            max-width: 360px;
+            width: 90%;
             text-align: center;
-            animation: modalUp 0.3s ease-out;
+            animation: popIn 0.3s ease-out;
         }
 
-        @keyframes modalUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .modal-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
+        .modal-content h2 {
+            color: var(--hero-blue);
+            margin-top: 0;
         }
 
-        .modal-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--danger);
-            margin-bottom: 8px;
-        }
-
-        .modal-desc {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .btn-modal {
-            background: var(--danger);
-            color: white;
-            width: 100%;
-            padding: 12px;
-            border: none;
+        .video-container {
+            position: relative;
+            padding-bottom: 177.78%; /* 9:16 비율 */
+            height: 0;
+            overflow: hidden;
             border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: 0;
+        }
+
+        .close-btn {
+            background: var(--hero-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-<div class="phone-container">
-    <!-- 스타 테마 응원 헤더 -->
-    <div class="hero-header">
-        <div class="hero-avatar">🎤</div>
-        <div class="hero-title">"어르신, 오늘도 건강행!"</div>
-        <div class="hero-sub">영웅이가 응원하는 30일 건강 퀘스트</div>
+    <div class="container">
+        <button class="easter-trigger" onclick="openEasterEgg()">🎤 Hero</button>
+        
+        <header>
+            <h1>영웅시대 퀘스트 🍇</h1>
+            <p style="margin:0; color:#666; font-size:14px;">오늘의 미션을 완수하고 포도알을 채워보세요!</p>
+        </header>
+
+        <!-- 포도판 (10개) -->
+        <div class="grape-board" id="grapeBoard">
+            <!-- 자바스크립트로 동적 생성 -->
+        </div>
+
+        <!-- 일일 퀘스트 목록 -->
+        <ul class="quest-list">
+            <li class="quest-item">
+                <span>🎵 음원 스트리밍 스밍 돌리기</span>
+                <input type="checkbox" onchange="toggleGrape(0, this.checked)">
+            </li>
+            <li class="quest-item">
+                <span>📺 공식 유튜브 영상 시청하기</span>
+                <input type="checkbox" onchange="toggleGrape(1, this.checked)">
+            </li>
+            <li class="quest-item">
+                <span>💙 영웅시대 카페 댓글 남기기</span>
+                <input type="checkbox" onchange="toggleGrape(2, this.checked)">
+            </li>
+        </ul>
     </div>
 
-    <!-- 푸시 알림 스타일 UI -->
-    <div class="push-notification">
-        <div class="push-icon">🔔</div>
-        <div class="push-content">
-            <div class="push-title">케어루프 알림</div>
-            <div class="push-text">점심 약 드실 시간이에요! 포도알 채우러 가볼까요?</div>
+    <!-- 이스터 에그 모달 (임영웅 쇼츠 영상) -->
+    <div class="modal-overlay" id="easterEggModal">
+        <div class="modal-content">
+            <h2>✨ 넌 감동이었어 ✨</h2>
+            <p style="margin: 5px 0; font-size: 13px; color: #555;">
+                감성 장인 임영웅의 특별 무대 🎵
+            </p>
+            <div class="video-container">
+                <iframe id="heroVideo" src="" title="임영웅 - 넌 감동이었어" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <button class="close-btn" onclick="closeEasterEgg()">닫기</button>
         </div>
     </div>
 
-    <!-- 30일 포도알 스티커판 -->
-    <div class="quest-card">
-        <div class="quest-header">
-            <div class="quest-title">🍇 30일 복약 포도송이</div>
-            <div class="quest-count"><span id="grapeCount">12</span> / 30일 성공</div>
-        </div>
-        <div class="grape-grid" id="grapeGrid">
-            <!-- 자바스크립트로 포도알 30개 자동 생성 -->
-        </div>
-    </div>
-
-    <!-- 오늘 상태 기록 섹션 -->
-    <div class="input-section">
-        <div class="section-label">📊 오늘 느끼는 통증 수치</div>
-        <div class="pain-slider-container">
-            <div class="pain-value"><span id="painNum">2</span>점 <small style="font-size:12px; color:#666;">(0:없음 ~ 10:극심함)</small></div>
-            <input type="range" id="painSlider" min="0" max="10" value="2" oninput="updatePain(this.value)">
-        </div>
-
-        <div class="symptom-check">
-            <label for="warningCheck" style="font-size:14px; font-weight:600; cursor:pointer;">
-                🚨 수술 부위 진물이나 발열이 있나요?
-            </label>
-            <input type="checkbox" id="warningCheck" style="width:20px; height:20px; accent-color:var(--danger);">
-        </div>
-
-        <button class="btn-submit" onclick="submitDailyQuest()">오늘 퀘스트 완료하기 🍇</button>
-    </div>
-</div>
-
-<!-- 위험 상태 감지 시 자동 의사 진단 예약 팝업 -->
-<div class="modal-overlay" id="doctorModal">
-    <div class="modal-content">
-        <div class="modal-icon">🏥</div>
-        <div class="modal-title">자동 의사 진단 예약 안내</div>
-        <div class="modal-desc">
-            오늘 입력하신 통증 수치가 높거나 이상 징후가 감지되었습니다.<br><br>
-            환자님의 안전을 위해 <strong>담당 주치의 선생님 진료가 자동으로 예약</strong>되었습니다.
-        </div>
-        <button class="btn-modal" onclick="closeModal()">예약 내역 확인하기</button>
-    </div>
-</div>
-
-<script>
-    let completedDays = 12;
-
-    // 포도송이 30일판 생성
-    function renderGrapes() {
-        const grid = document.getElementById('grapeGrid');
-        grid.innerHTML = '';
-        for (let i = 1; i <= 30; i++) {
+    <script>
+        // 포도알 10개 생성
+        const grapeBoard = document.getElementById('grapeBoard');
+        for (let i = 1; i <= 10; i++) {
             const grape = document.createElement('div');
-            grape.className = 'grape-item' + (i <= completedDays ? ' done' : '');
-            grape.innerText = i <= completedDays ? '🍇' : i;
-            grid.appendChild(grape);
+            grape.className = 'grape';
+            grape.id = `grape-${i}`;
+            grape.innerText = i;
+            grapeBoard.appendChild(grape);
         }
-        document.getElementById('grapeCount').innerText = completedDays;
-    }
 
-    function updatePain(val) {
-        document.getElementById('painNum').innerText = val;
-    }
-
-    // 퀘스트 완료 버튼 클릭 시
-    function submitDailyQuest() {
-        const pain = parseInt(document.getElementById('painSlider').value);
-        const warning = document.getElementById('warningCheck').checked;
-
-        // 상태가 심각할 경우 (통증 7 이상 또는 이상 징후 체크 시) -> 자동 의사 예약 팝업
-        if (warning || pain >= 7) {
-            document.getElementById('doctorModal').style.display = 'flex';
-        } else {
-            if (completedDays < 30) {
-                completedDays++;
-                renderGrapes();
+        // 퀘스트 완료 시 포도알 채우기
+        function toggleGrape(index, isChecked) {
+            const grape = document.getElementById(`grape-${index + 1}`);
+            if (grape) {
+                if (isChecked) {
+                    grape.classList.add('active');
+                } else {
+                    grape.classList.remove('active');
+                }
             }
-            alert("🎉 오늘 약 복용 완료! 영웅이가 어르신의 건강을 응원합니다!");
         }
-    }
 
-    function closeModal() {
-        document.getElementById('doctorModal').style.display = 'none';
-        if (completedDays < 30) {
-            completedDays++;
-            renderGrapes();
+        // 이스터에그 모달 열기/닫기
+        function openEasterEgg() {
+            const modal = document.getElementById('easterEggModal');
+            const iframe = document.getElementById('heroVideo');
+            // 유튜브 쇼츠 자동재생 Embed 링크 적용
+            iframe.src = "https://www.youtube.com/embed/C1IT6reF8SU?autoplay=1";
+            modal.style.display = 'flex';
         }
-    }
 
-    // 초기 화면 생성
-    renderGrapes();
-</script>
+        function closeEasterEgg() {
+            const modal = document.getElementById('easterEggModal');
+            const iframe = document.getElementById('heroVideo');
+            iframe.src = ""; // 영상 정지
+            modal.style.display = 'none';
+        }
 
+        // 키보드로 'hero' 입력 시 이스터 에그 발동
+        let keyBuffer = '';
+        window.addEventListener('keydown', (e) => {
+            keyBuffer += e.key.toLowerCase();
+            if (keyBuffer.length > 10) keyBuffer = keyBuffer.slice(-10);
+            if (keyBuffer.endsWith('hero')) {
+                openEasterEgg();
+                keyBuffer = '';
+            }
+        });
+    </script>
 </body>
 </html>
