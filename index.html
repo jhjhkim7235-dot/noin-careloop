@@ -2,2955 +2,2505 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#8546BD">
-  <title>CareLoop | 케어루프</title>
-
-  <style>
-    :root {
-      --purple: #8546bd;
-      --purple-dark: #63308f;
-      --purple-light: #f3eafa;
-      --background: #f7f4fb;
-      --text: #262032;
-      --muted: #756d7d;
-      --border: #e8e1ee;
-      --danger: #ba3754;
-      --green: #24865b;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font-family:
-        "Apple SD Gothic Neo",
-        "Malgun Gothic",
-        "Noto Sans KR",
-        Arial,
-        sans-serif;
-      font-size: 16px;
-      line-height: 1.65;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .app {
-      max-width: 620px;
-      min-height: 100vh;
-      margin: 0 auto;
-      background: #fff;
-      padding-bottom: 100px;
-      box-shadow: 0 0 40px #2810380d;
-    }
-
-    header {
-      padding: 22px 20px 17px;
-      background: linear-gradient(135deg, #8f51c6, #67409d);
-      color: #fff;
-    }
-
-    .brand {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
-
-    .brand-sub {
-      font-size: 13px;
-      opacity: 0.9;
-    }
-
-    .header-badge {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 4px 10px;
-      border: 1px solid #ffffff70;
-      border-radius: 20px;
-      font-size: 12px;
-    }
-
-    main {
-      padding: 17px 15px;
-    }
-
-    .tab-page {
-      display: none;
-    }
-
-    .tab-page.active {
-      display: block;
-    }
-
-    .card {
-      padding: 19px;
-      margin-bottom: 15px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 19px;
-      box-shadow: 0 4px 16px #43255f09;
-    }
-
-    .soft-card {
-      background: #faf6ff;
-      border-color: #eaddf6;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
-    h2 {
-      font-size: 22px;
-      line-height: 1.4;
-      margin-bottom: 9px;
-    }
-
-    h3 {
-      font-size: 18px;
-      margin-bottom: 9px;
-    }
-
-    p {
-      margin-bottom: 11px;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .small {
-      font-size: 13px;
-    }
-
-    .notice {
-      background: #fff8e9;
-      border: 1px solid #f0deb3;
-      color: #775522;
-      padding: 13px;
-      border-radius: 12px;
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    .notice.danger {
-      background: #fff0f2;
-      border-color: #f1c5d0;
-      color: #8c2d45;
-    }
-
-    .notice.success {
-      background: #ebf9f1;
-      border-color: #c3e9d3;
-      color: #236644;
-    }
-
-    .btn {
-      border: 0;
-      border-radius: 13px;
-      padding: 13px 16px;
-      background: var(--purple);
-      color: #fff;
-      font-weight: 800;
-      min-height: 48px;
-      transition: opacity 0.2s;
-    }
-
-    .btn:active {
-      opacity: 0.75;
-    }
-
-    .btn.secondary {
-      color: var(--purple-dark);
-      background: var(--purple-light);
-    }
-
-    .btn.outline {
-      background: #fff;
-      border: 1px solid #c9afe2;
-      color: var(--purple-dark);
-    }
-
-    .btn.danger {
-      background: #b54d67;
-    }
-
-    .btn.full {
-      display: block;
-      width: 100%;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-    }
-
-    .btn-row .btn {
-      flex: 1;
-      min-width: 125px;
-    }
-
-    .mode-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 9px;
-      margin: 14px 0;
-    }
-
-    .mode-button {
-      border: 1px solid #e0d3ec;
-      border-radius: 12px;
-      padding: 12px;
-      background: #fff;
-      color: #694a7d;
-      font-weight: 800;
-    }
-
-    .mode-button.active {
-      background: var(--purple);
-      border-color: var(--purple);
-      color: #fff;
-    }
-
-    label.field-label {
-      display: block;
-      font-weight: 800;
-      margin: 14px 0 7px;
-    }
-
-    textarea,
-    input[type="text"],
-    input[type="file"],
-    select {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd5e5;
-      border-radius: 12px;
-      background: #fff;
-      color: var(--text);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 85px;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--purple);
-    }
-
-    .range-value {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 20px;
-      background: var(--purple-light);
-      color: var(--purple-dark);
-      font-size: 20px;
-      font-weight: 900;
-    }
-
-    .check-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin: 12px 0;
-    }
-
-    .check-item {
-      padding: 11px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 14px;
-      background: #fff;
-    }
-
-    .check-item input {
-      margin-right: 5px;
-      accent-color: var(--purple);
-    }
-
-    .status-panel {
-      padding: 13px 14px;
-      border-radius: 13px;
-      background: #f5eefb;
-      color: #63318d;
-      font-weight: 800;
-      margin: 12px 0;
-    }
-
-    .grape-wrap {
-      max-width: 430px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .grape-board {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-width: 390px;
-      margin: 0 auto;
-    }
-
-    .grape-count {
-      font-weight: 900;
-      font-size: 20px;
-      color: var(--purple-dark);
-    }
-
-    .legend {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 13px;
-      margin-top: 3px;
-    }
-
-    .legend-dot {
-      display: inline-block;
-      vertical-align: middle;
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      border: 2px solid var(--purple);
-      margin-right: 4px;
-    }
-
-    .legend-dot.filled {
-      background: var(--purple);
-    }
-
-    .result {
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      font-size: 14px;
-      background: #faf8fc;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      min-height: 50px;
-      margin-top: 12px;
-    }
-
-    .result:empty {
-      display: none;
-    }
-
-    .preview-image {
-      display: none;
-      width: 100%;
-      max-height: 350px;
-      object-fit: contain;
-      margin-top: 11px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    .exercise-choice {
-      width: 100%;
-      text-align: left;
-      border: 1px solid var(--border);
-      background: #fff;
-      border-radius: 12px;
-      padding: 12px;
-      margin: 5px 0;
-      color: var(--text);
-    }
-
-    .exercise-choice.active {
-      border-color: var(--purple);
-      background: var(--purple-light);
-      font-weight: 800;
-    }
-
-    .steps {
-      padding-left: 23px;
-    }
-
-    .steps li {
-      margin: 9px 0;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .stat {
-      background: #f7f1fc;
-      border-radius: 14px;
-      text-align: center;
-      padding: 15px 7px;
-    }
-
-    .stat strong {
-      display: block;
-      color: var(--purple-dark);
-      font-size: 27px;
-    }
-
-    .stat span {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .bars {
-      height: 185px;
-      display: flex;
-      justify-content: space-around;
-      align-items: end;
-      gap: 7px;
-      border-bottom: 1px solid var(--border);
-      margin-top: 19px;
-    }
-
-    .bar-column {
-      height: 100%;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: end;
-      gap: 4px;
-    }
-
-    .bar {
-      width: 100%;
-      max-width: 39px;
-      min-height: 5px;
-      border-radius: 7px 7px 0 0;
-      background: #d7c8e4;
-    }
-
-    .bar.filled {
-      background: linear-gradient(#b575df, #7436ab);
-    }
-
-    .bar-caption {
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .chat {
-      background: #f5f4e9;
-      padding: 14px;
-      border-radius: 15px;
-    }
-
-    .chat-bubble {
-      max-width: 90%;
-      background: #fff;
-      border-radius: 14px 14px 14px 3px;
-      padding: 13px;
-      margin: 10px 0;
-      box-shadow: 0 2px 8px #00000009;
-      white-space: pre-wrap;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      width: 100%;
-      max-width: 620px;
-      background: #fff;
-      border-top: 1px solid var(--border);
-      padding: 8px 3px max(10px, env(safe-area-inset-bottom));
-      z-index: 20;
-    }
-
-    .nav-button {
-      border: 0;
-      background: transparent;
-      color: #81768a;
-      padding: 7px 2px;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .nav-button span {
-      display: block;
-      font-size: 22px;
-      line-height: 1.4;
-    }
-
-    .nav-button.active {
-      color: var(--purple);
-    }
-
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: #20132ccc;
-      padding: 20px;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .overlay.visible {
-      display: flex;
-    }
-
-    .modal {
-      background: #fff;
-      width: 100%;
-      max-width: 490px;
-      max-height: 90vh;
-      overflow: auto;
-      border-radius: 20px;
-      padding: 20px;
-    }
-
-    .modal video {
-      display: block;
-      width: 100%;
-      max-height: 62vh;
-      background: #180d22;
-      border-radius: 12px;
-      margin: 12px 0;
-    }
-
-    a {
-      color: #7034a5;
-      overflow-wrap: anywhere;
-    }
-
-    .divider {
-      border: 0;
-      border-top: 1px solid var(--border);
-      margin: 18px 0;
-    }
-
-    @media (max-width: 370px) {
-      main {
-        padding: 12px 10px;
-      }
-
-      .card {
-        padding: 14px;
-      }
-
-      .nav-button {
-        font-size: 11px;
-      }
-
-      .nav-button span {
-        font-size: 19px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#8546bd">
+<title>CareLoop | 케어루프</title>
+
+<style>
+:root {
+  --primary: #8546bd;
+  --primary-dark: #65308f;
+  --primary-soft: #f3eafb;
+  --ink: #282333;
+  --muted: #756e80;
+  --line: #e9e1ef;
+  --bg: #f8f6fb;
+  --danger: #b83d59;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic",
+               "Noto Sans KR", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* 중요: hidden 속성이 CSS 때문에 무시되지 않도록 */
+[hidden] {
+  display: none !important;
+}
+
+.app {
+  max-width: 520px;
+  min-height: 100vh;
+  margin: auto;
+  background: #fff;
+  padding-bottom: 90px;
+  box-shadow: 0 0 24px #321b490a;
+}
+
+.app-header {
+  background: linear-gradient(135deg, #8b4ec2, #6b3c9e);
+  color: white;
+  padding: 22px 19px 20px;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: 900;
+  letter-spacing: -.8px;
+}
+
+.tagline {
+  font-size: 13px;
+  opacity: .94;
+  margin-top: 2px;
+}
+
+.demo-label {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 10px;
+  font-size: 11px;
+  border: 1px solid #ffffff75;
+  border-radius: 999px;
+}
+
+main {
+  padding: 15px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.card {
+  margin-bottom: 15px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  box-shadow: 0 3px 12px #42265f08;
+}
+
+.card.lavender {
+  background: #faf6fe;
+  border-color: #eadff5;
+}
+
+h2, h3, p {
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 21px;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 9px;
+}
+
+p {
+  margin-bottom: 12px;
+}
+
+.muted {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.small {
+  font-size: 12px;
+}
+
+.notice {
+  padding: 12px;
+  background: #fff8e9;
+  border: 1px solid #f0dfb8;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #786032;
+  line-height: 1.6;
+}
+
+.notice.red {
+  background: #fff1f3;
+  color: #912f49;
+  border-color: #efc7cf;
+}
+
+.notice.green {
+  background: #ebf9f1;
+  color: #216b43;
+  border-color: #c7e8d4;
+}
+
+.btn {
+  border: none;
+  border-radius: 13px;
+  padding: 13px 14px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  min-height: 48px;
+}
+
+.btn.full {
+  width: 100%;
+}
+
+.btn.soft {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+}
+
+.btn.outline {
+  background: #fff;
+  color: var(--primary-dark);
+  border: 1px solid #d2b9e6;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.btn-row .btn {
+  flex: 1;
+  min-width: 125px;
+}
+
+.status {
+  background: #f5edfa;
+  color: var(--primary-dark);
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 800;
+  margin: 12px 0;
+}
+
+.mode-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.mode-btn {
+  border: 1px solid #e2d7ed;
+  border-radius: 12px;
+  padding: 12px 7px;
+  background: white;
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
+.mode-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.field-title {
+  display: block;
+  font-weight: 800;
+  margin: 13px 0 7px;
+}
+
+textarea, input[type="text"], input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ded6e7;
+  background: #fff;
+  color: var(--ink);
+}
+
+textarea {
+  min-height: 83px;
+  resize: vertical;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--primary);
+}
+
+.pain-number {
+  display: block;
+  width: fit-content;
+  margin: 8px auto 13px;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  padding: 3px 15px;
+  border-radius: 100px;
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.checks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.check {
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.check input {
+  accent-color: var(--primary);
+}
+
+.grape-heading {
+  text-align: center;
+}
+
+.grape-heading h2 {
+  margin-bottom: 5px;
+}
+
+.grape-count {
+  color: var(--primary-dark);
+  font-size: 22px;
+  font-weight: 900;
+  margin: 9px 0 0;
+}
+
+.grape-svg {
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  height: auto;
+  margin: auto;
+}
+
+.grape-legend {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 4px 0 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.dot {
+  display: inline-block;
+  vertical-align: middle;
+  width: 13px;
+  height: 13px;
+  border-radius: 100%;
+  margin-right: 4px;
+  border: 2px solid #8b40b8;
+}
+
+.dot.done {
+  background: #8b40b8;
+}
+
+.output {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #faf8fc;
+  font-size: 13px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.output:empty {
+  display: none;
+}
+
+.preview-photo {
+  display: none;
+  width: 100%;
+  max-height: 330px;
+  object-fit: contain;
+  margin: 12px 0;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.exercise-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  margin: 7px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+  color: var(--ink);
+}
+
+.exercise-btn.active {
+  background: var(--primary-soft);
+  border-color: #bd91db;
+  color: var(--primary-dark);
+  font-weight: 800;
+}
+
+.steps {
+  padding-left: 22px;
+  margin-bottom: 17px;
+}
+
+.steps li {
+  margin: 8px 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.stat {
+  text-align: center;
+  padding: 14px 6px;
+  border-radius: 13px;
+  background: #f6f0fb;
+}
+
+.stat b {
+  display: block;
+  color: var(--primary-dark);
+  font-size: 25px;
+}
+
+.stat span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.chart {
+  height: 175px;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  gap: 7px;
+  margin: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.chart-col {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+
+.chart-bar {
+  width: 100%;
+  max-width: 38px;
+  min-height: 5px;
+  border-radius: 7px 7px 0 0;
+  background: #ddd2e8;
+}
+
+.chart-bar.done {
+  background: linear-gradient(#c789e5, #8240b3);
+}
+
+.chart-label {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.chat {
+  background: #f6f4e9;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.chat-bubble {
+  background: white;
+  padding: 14px;
+  border-radius: 14px 14px 14px 3px;
+  margin-top: 10px;
+  white-space: pre-wrap;
+  font-size: 14px;
+}
+
+.nav {
+  position: fixed;
+  z-index: 20;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 520px;
+  padding: 7px 3px max(8px, env(safe-area-inset-bottom));
+  background: white;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.nav-btn {
+  border: none;
+  background: transparent;
+  color: #807687;
+  padding: 6px 1px;
+  font-weight: 800;
+  font-size: 11px;
+}
+
+.nav-btn.active {
+  color: var(--primary);
+}
+
+.nav-btn .emoji {
+  display: block;
+  font-size: 22px;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #22162cba;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.overlay.open {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 430px;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 20px;
+  border-radius: 19px;
+  background: white;
+}
+
+.modal video {
+  display: block;
+  width: 100%;
+  max-height: 61vh;
+  border-radius: 12px;
+  background: #1b1422;
+  margin: 12px 0;
+}
+
+a {
+  color: #7433a7;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 360px) {
+  main {
+    padding: 10px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+}
+</style>
 </head>
 
 <body>
-  <div class="app">
-    <header>
-      <div class="brand">🍇 CareLoop</div>
-      <div class="brand-sub">케어루프 · 건강한 일상의 동반자</div>
-      <div class="header-badge">학교 창업 프로젝트 · 체험용 프로토타입</div>
-    </header>
+<div class="app">
 
-    <main>
+  <header class="app-header">
+    <div class="logo">🍇 케어루프 CareLoop</div>
+    <div class="tagline">당신의 건강한 일상을 이어주는 서비스</div>
+    <div class="demo-label">학교 창업 프로젝트 · 체험용 프로토타입</div>
+  </header>
 
-      <!-- ================== 홈 ================== -->
-      <section class="tab-page active" id="page-home">
-        <div class="card soft-card">
-          <h2>안녕하세요! 💜</h2>
-          <p>오늘도 건강한 하루를 기록해 볼까요?</p>
-          <div class="notice">
-            이 웹앱은 기능 시연용입니다. 실제 환자 정보 대신
-            가상의 정보를 입력해 주세요.
-            건강 상태에 관한 판단은 반드시 의료진과 상담해야 합니다.
-          </div>
+  <main>
+
+    <!-- 홈 -->
+    <section class="page active" id="page-home">
+
+      <div class="card lavender">
+        <h2>오늘도 건강한 하루! 💜</h2>
+        <p>복약과 건강 상태를 기록하며 작은 성취를 쌓아보세요.</p>
+        <div class="notice">
+          본 서비스는 의료용 앱이 아닌 체험용 프로토타입입니다.
+          실제 환자의 개인정보나 처방전을 입력하지 말고,
+          가상 정보로 체험해 주세요.
         </div>
+      </div>
 
-        <div class="card">
-          <h3>📅 이용 모드 선택</h3>
+      <div class="card">
+        <h3>📅 건강관리 모드</h3>
 
-          <div class="mode-row">
-            <button class="mode-button active" id="demoModeButton" type="button">
-              🎬 발표 시연
-            </button>
-
-            <button class="mode-button" id="realModeButton" type="button">
-              📆 실제 날짜
-            </button>
-          </div>
-
-          <div class="status-panel" id="dayStatus"></div>
-          <p class="muted small" id="modeDescription"></p>
-
-          <div id="demoControls">
-            <div class="btn-row">
-              <button class="btn secondary" id="demoNextButton" type="button">
-                다음 날로 이동
-              </button>
-
-              <button class="btn secondary" id="demoFastButton" type="button">
-                ⏩ 30일차로 이동
-              </button>
-            </div>
-
-            <p class="muted small" id="demoHint"></p>
-
-            <button class="btn outline full" id="demoResetButton" type="button">
-              시연 기록 처음부터 시작
-            </button>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>💊 오늘의 복약 확인</h3>
-
-          <p class="muted">
-            처방대로 복용했는지 스스로 확인하고 기록하는 기능입니다.
-          </p>
-
-          <div class="status-panel" id="medStatus">
-            아직 복약 기록이 없습니다.
-          </div>
-
-          <button class="btn full" id="markMedButton" type="button">
-            ✅ 오늘 약 복용 완료 기록하기
+        <div class="mode-row">
+          <button class="mode-btn" id="demoMode" type="button">
+            🎬 발표 시연
           </button>
-
-          <p class="muted small">
-            실제 약 복용 여부를 앱이 자동으로 확인하지는 않습니다.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>🌡️ 오늘의 통증과 증상</h3>
-
-          <label class="field-label" for="painRange">
-            현재 통증 점수
-          </label>
-
-          <div style="text-align:center;margin-bottom:10px">
-            <span class="range-value" id="painValue">0 / 10</span>
-          </div>
-
-          <input id="painRange" type="range" min="0" max="10" value="0">
-
-          <p class="muted small">
-            0점은 통증 없음, 10점은 매우 심한 통증을 뜻합니다.
-          </p>
-
-          <label class="field-label">해당하는 증상 선택</label>
-
-          <div class="check-grid">
-            <label class="check-item">
-              <input type="checkbox" name="symptom" value="어지러움">
-              어지러움
-            </label>
-
-            <label class="check-item">
-              <input type="checkbox" name="symptom" value="호흡 곤란">
-              호흡 곤란
-            </label>
-
-            <label class="check-item">
-              <input type="checkbox" name="symptom" value="가슴 통증">
-              가슴 통증
-            </label>
-
-            <label class="check-item">
-              <input type="checkbox" name="symptom" value="발열">
-              발열
-            </label>
-
-            <label class="check-item">
-              <input type="checkbox" name="symptom" value="부종">
-              부종
-            </label>
-
-            <label class="check-item">
-              <input type="checkbox" name="symptom" value="메스꺼움">
-              메스꺼움
-            </label>
-          </div>
-
-          <button class="btn full" id="saveHealthButton" type="button">
-            💜 오늘의 건강 상태 저장
-          </button>
-
-          <p class="muted small" id="healthSaveStatus"></p>
-        </div>
-
-        <div class="card">
-          <div style="text-align:center">
-            <h2>🍇 포도송이 칭찬스티커</h2>
-            <p class="muted">
-              하루하루 약 복용을 기록하고 포도송이를 완성해 보세요!
-            </p>
-            <div class="grape-count" id="grapeCount">0 / 30일</div>
-          </div>
-
-          <div class="grape-wrap">
-            <svg
-              class="grape-board"
-              viewBox="0 0 390 548"
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="30일 복약 포도송이 스티커판"
-            >
-              <defs>
-                <radialGradient id="berryGradient" cx="30%" cy="24%">
-                  <stop offset="0" stop-color="#D9A5F6"></stop>
-                  <stop offset="0.5" stop-color="#9B48CC"></stop>
-                  <stop offset="1" stop-color="#662095"></stop>
-                </radialGradient>
-              </defs>
-
-              <!-- 포도 줄기 -->
-              <path
-                d="M193 138 Q178 82 168 26"
-                fill="none"
-                stroke="#B16A2C"
-                stroke-width="19"
-                stroke-linecap="round"
-              ></path>
-
-              <!-- 왼쪽 잎 -->
-              <path
-                d="M188 134
-                   C154 51 85 36 35 86
-                   C73 89 78 113 54 129
-                   C115 108 146 169 188 134Z"
-                fill="#34BB60"
-              ></path>
-
-              <!-- 오른쪽 잎 -->
-              <path
-                d="M190 133
-                   C230 48 291 36 353 85
-                   C310 93 313 114 339 129
-                   C277 111 235 167 190 133Z"
-                fill="#20A94E"
-              ></path>
-
-              <!-- 잎맥 -->
-              <path
-                d="M188 133 Q110 78 61 96
-                   M190 133 Q275 78 328 94"
-                fill="none"
-                stroke="#A3E9A7"
-                stroke-width="4"
-              ></path>
-
-              <g id="grapeCells"></g>
-            </svg>
-          </div>
-
-          <div class="legend">
-            <span>
-              <i class="legend-dot"></i>
-              아직 기록하지 않은 날
-            </span>
-            <span>
-              <i class="legend-dot filled"></i>
-              기록한 날
-            </span>
-          </div>
-
-          <p class="muted small" id="grapeDescription"
-             style="text-align:center;margin-top:13px"></p>
-
-          <button
-            class="btn full"
-            id="rewardButton"
-            type="button"
-            hidden
-          >
-            🎬 30일 완주 축하 영상 보기
+          <button class="mode-btn" id="realMode" type="button">
+            📅 실제 날짜
           </button>
         </div>
-      </section>
 
-      <!-- ================== 약 확인 ================== -->
-      <section class="tab-page" id="page-meds">
-        <div class="card">
-          <h2>💊 약 확인</h2>
+        <div class="status" id="dayText"></div>
+        <p class="muted" id="modeText"></p>
 
-          <p>
-            기존에 복용하는 약과 새로 받은 약을 비교해
-            <strong>일부 예시 약물 상호작용</strong>을 확인합니다.
-          </p>
-
-          <div class="notice danger">
-            현재 등록된 대표적인 약물 조합만 검사하는 시연 기능입니다.
-            경고가 나타나지 않아도 안전하다는 뜻은 아닙니다.
-            약을 복용하거나 중단하기 전 반드시 의사 또는 약사와 상담하세요.
-          </div>
-
-          <label class="field-label" for="existingMeds">
-            평소 복용하던 약 이름
-          </label>
-
-          <textarea
-            id="existingMeds"
-            placeholder="예: 와파린"
-          ></textarea>
-
-          <label class="field-label" for="newMeds">
-            새롭게 처방받은 약 이름
-          </label>
-
-          <textarea
-            id="newMeds"
-            placeholder="예: 이부프로펜"
-          ></textarea>
-
+        <div id="demoControls">
           <div class="btn-row">
-            <button class="btn" id="analyzeMedsButton" type="button">
-              🔎 상호작용 확인
+            <button class="btn soft" id="nextDay" type="button">
+              다음 날 →
             </button>
-
-            <button class="btn secondary" id="medSampleButton" type="button">
-              🧪 예시 입력
-            </button>
-          </div>
-
-          <div class="result" id="medResult"></div>
-        </div>
-
-        <div class="card">
-          <h3>📸 약봉투 사진 인식</h3>
-
-          <p class="muted">
-            사진 속 글자를 자동으로 읽는 OCR 기능입니다.
-            인식한 약 이름은 직접 확인해야 합니다.
-          </p>
-
-          <input
-            type="file"
-            id="medicinePhoto"
-            accept="image/*"
-          >
-
-          <img
-            id="medicinePreview"
-            class="preview-image"
-            alt="업로드한 약봉투 사진 미리보기"
-          >
-
-          <div class="btn-row" style="margin-top:12px">
-            <button class="btn" id="ocrButton" type="button">
-              📖 사진 글자 인식하기
-            </button>
-
-            <button class="btn secondary" id="sampleBagButton" type="button">
-              🖼️ 시연용 약봉투 다운로드
+            <button class="btn soft" id="skipDay" type="button">
+              ⏩ 30일차로 이동
             </button>
           </div>
 
-          <label class="field-label" for="ocrText">
-            인식 결과 · 직접 수정 가능
-          </label>
+          <p class="muted small" id="demoHelp"></p>
 
-          <textarea
-            id="ocrText"
-            placeholder="사진을 인식하면 이곳에 글자가 표시됩니다."
-          ></textarea>
-
-          <p class="muted small" id="ocrStatus">
-            인터넷 연결이 필요하며, 기기와 이미지에 따라
-            인식 결과가 달라질 수 있습니다.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>🌐 공개 의약품 정보 조회</h3>
-
-          <p class="muted">
-            미국 FDA의 공개 허가사항 데이터에서
-            입력한 약 이름을 검색합니다.
-            한국어 약 이름은 검색되지 않을 수 있습니다.
-          </p>
-
-          <label class="field-label" for="fdaDrugName">
-            검색할 약 이름
-          </label>
-
-          <input
-            type="text"
-            id="fdaDrugName"
-            placeholder="예: ibuprofen"
-          >
-
-          <button
-            class="btn full"
-            id="fdaButton"
-            type="button"
-            style="margin-top:12px"
-          >
-            FDA 공개 정보 검색
-          </button>
-
-          <div class="result" id="fdaResult"></div>
-
-          <p class="muted small" style="margin-top:13px">
-            추가 확인:
-            <a
-              href="https://nedrug.mfds.go.kr/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >의약품안전나라</a>
-            ·
-            <a
-              id="naverDrugLink"
-              href="https://search.naver.com/search.naver?query=%EC%9D%98%EC%95%BD%ED%92%88"
-              target="_blank"
-              rel="noopener noreferrer"
-            >네이버 약 정보 검색</a>
-          </p>
-        </div>
-      </section>
-
-      <!-- ================== 재활 ================== -->
-      <section class="tab-page" id="page-rehab">
-        <div class="card">
-          <h2>🏃 재활 가이드</h2>
-
-          <div class="notice">
-            아래 운동은 기능 시연을 위한 일반적인 예시입니다.
-            본인에게 적절한 운동인지 담당 의료진에게 확인한 후
-            실시해야 합니다. 통증이나 어지러움이 생기면
-            무리하지 마세요.
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>오늘의 운동 선택</h3>
-          <div id="exerciseList"></div>
-
-          <hr class="divider">
-
-          <label class="field-label" for="customExercise">
-            직접 운동 이름 추가
-          </label>
-
-          <input
-            type="text"
-            id="customExercise"
-            placeholder="예: 의사가 알려준 팔 운동"
-          >
-
-          <button
-            class="btn secondary full"
-            id="addExerciseButton"
-            type="button"
-            style="margin-top:9px"
-          >
-            + 운동 추가
+          <button class="btn outline full" id="resetDemo" type="button">
+            발표 시연 처음부터 시작
           </button>
         </div>
+      </div>
 
-        <div class="card">
-          <h3 id="exerciseTitle">운동을 선택해 주세요</h3>
-
-          <ol class="steps" id="exerciseSteps"></ol>
-
-          <div class="notice">
-            의료진이 허용한 경우에만 시행하세요.
-            운동 중 심한 통증, 호흡 곤란, 흉통 등이 발생하면
-            운동을 중단하고 적절한 도움을 받으세요.
-          </div>
-
-          <label class="field-label" for="beforePain">
-            운동 전 통증
-          </label>
-
-          <input id="beforePain" type="range" min="0" max="10" value="0">
-          <p class="muted" id="beforePainText">0 / 10</p>
-
-          <label class="field-label" for="afterPain">
-            운동 후 통증
-          </label>
-
-          <input id="afterPain" type="range" min="0" max="10" value="0">
-          <p class="muted" id="afterPainText">0 / 10</p>
-
-          <button
-            class="btn full"
-            id="completeExerciseButton"
-            type="button"
-          >
-            ✅ 오늘 운동 완료 기록
-          </button>
-
-          <p class="muted small" id="exerciseStatus"></p>
-        </div>
-      </section>
-
-      <!-- ================== 리포트 ================== -->
-      <section class="tab-page" id="page-report">
-        <div class="card">
-          <h2>📊 건강 기록 리포트</h2>
-          <p class="muted" id="reportMode"></p>
-
-          <div class="stats">
-            <div class="stat">
-              <strong id="reportMedRate">0%</strong>
-              <span>복약 기록 비율</span>
-            </div>
-
-            <div class="stat">
-              <strong id="reportRehabRate">0%</strong>
-              <span>재활 기록 비율</span>
-            </div>
-
-            <div class="stat">
-              <strong id="reportPainAverage">-</strong>
-              <span>기록된 평균 통증</span>
-            </div>
-
-            <div class="stat">
-              <strong id="reportWarningDays">0일</strong>
-              <span>주의 기록이 있는 날</span>
-            </div>
-          </div>
-
-          <h3 style="margin-top:25px">최근 기록 7개 · 복약 현황</h3>
-
-          <div class="bars" id="reportBars"></div>
-
-          <p class="muted small" id="reportFootnote"
-             style="margin-top:14px"></p>
-
-          <button
-            class="btn full"
-            id="copyReportButton"
-            type="button"
-          >
-            📋 리포트 복사하기
-          </button>
-
-          <p class="muted small" id="copyReportStatus"></p>
-        </div>
-      </section>
-
-      <!-- ================== 보호자 ================== -->
-      <section class="tab-page" id="page-family">
-        <div class="card">
-          <h2>💛 보호자 안심 케어</h2>
-
-          <p>
-            가족에게 건강 상태를 알려주는 기능을
-            미리 체험해 볼 수 있습니다.
-          </p>
-
-          <div class="notice danger">
-            현재는 실제 메시지 발송 기능이 아닌
-            <strong>알림 화면 시뮬레이션</strong>입니다.
-            카카오톡 메시지나 응급 알림이 자동 전송되지 않습니다.
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>💬 보호자 알림 미리보기</h3>
-
-          <div class="chat">
-            <div class="muted small">케어루프 · 가족 건강 알림</div>
-            <div class="chat-bubble" id="familyMessage"></div>
-          </div>
-
-          <button
-            class="btn secondary full"
-            id="refreshFamilyButton"
-            type="button"
-            style="margin-top:13px"
-          >
-            🔄 오늘의 기록으로 갱신
-          </button>
-
-          <button
-            class="btn full"
-            id="copyFamilyButton"
-            type="button"
-            style="margin-top:9px"
-          >
-            📋 알림 문구 복사하기
-          </button>
-
-          <p class="muted small" id="familyCopyStatus"></p>
-        </div>
-      </section>
-
-    </main>
-
-    <nav class="bottom-nav" aria-label="하단 메뉴">
-      <button class="nav-button active" data-tab="home" type="button">
-        <span>🏠</span>홈
-      </button>
-
-      <button class="nav-button" data-tab="meds" type="button">
-        <span>💊</span>약 확인
-      </button>
-
-      <button class="nav-button" data-tab="rehab" type="button">
-        <span>🏃</span>재활
-      </button>
-
-      <button class="nav-button" data-tab="report" type="button">
-        <span>📊</span>리포트
-      </button>
-
-      <button class="nav-button" data-tab="family" type="button">
-        <span>💛</span>보호자
-      </button>
-    </nav>
-  </div>
-
-  <!-- 일반 안내 모달 -->
-  <div class="overlay" id="alertOverlay">
-    <div class="modal" role="alertdialog" aria-modal="true">
-      <h2 id="alertTitle">안내</h2>
-      <p id="alertMessage"></p>
-      <button class="btn full" id="closeAlertButton" type="button">
-        확인
-      </button>
-    </div>
-  </div>
-
-  <!-- 30일 완주 보상 영상 -->
-  <div class="overlay" id="rewardOverlay">
-    <div class="modal" role="dialog" aria-modal="true">
-      <h2>🎉 30일 완주를 축하합니다!</h2>
-
-      <p>
-        포도송이 30알을 모두 채웠어요! 🍇💜
-      </p>
-
-      <p class="muted small" id="rewardVideoTitle">
-        축하 영상을 불러오는 중입니다.
-      </p>
-
-      <div id="rewardVideoContainer"></div>
-
-      <p class="muted small" id="rewardVideoStatus"></p>
-
-      <div class="btn-row">
-        <button
-          class="btn secondary"
-          id="anotherRewardButton"
-          type="button"
-        >
-          🔀 다른 영상 보기
-        </button>
-
-        <button
-          class="btn"
-          id="closeRewardButton"
-          type="button"
-        >
-          닫기
+      <div class="card">
+        <h3>💊 오늘의 복약 확인</h3>
+        <p class="muted">처방받은 약을 복용했는지 스스로 확인해 주세요.</p>
+        <div class="status" id="medStatus">아직 기록이 없습니다.</div>
+        <button class="btn full" id="medComplete" type="button">
+          ✅ 오늘 약 복용 완료
         </button>
       </div>
+
+      <div class="card">
+        <h3>🩺 오늘의 통증과 증상</h3>
+
+        <label class="field-title" for="pain">
+          현재 통증 정도
+        </label>
+
+        <span class="pain-number" id="painNumber">0 / 10</span>
+        <input id="pain" type="range" min="0" max="10" value="0">
+
+        <p class="muted">
+          0점은 통증 없음, 10점은 매우 심한 통증입니다.
+        </p>
+
+        <label class="field-title">해당하는 증상을 선택해 주세요.</label>
+
+        <div class="checks">
+          <label class="check">
+            <input type="checkbox" name="symptom" value="어지러움">
+            어지러움
+          </label>
+
+          <label class="check">
+            <input type="checkbox" name="symptom" value="호흡 곤란">
+            호흡 곤란
+          </label>
+
+          <label class="check">
+            <input type="checkbox" name="symptom" value="가슴 통증">
+            가슴 통증
+          </label>
+
+          <label class="check">
+            <input type="checkbox" name="symptom" value="발열">
+            발열
+          </label>
+
+          <label class="check">
+            <input type="checkbox" name="symptom" value="부종">
+            부종
+          </label>
+
+          <label class="check">
+            <input type="checkbox" name="symptom" value="메스꺼움">
+            메스꺼움
+          </label>
+        </div>
+
+        <button class="btn full" id="saveHealth" type="button">
+          💜 오늘의 건강 상태 저장
+        </button>
+
+        <p class="muted small" id="healthSaved"></p>
+      </div>
+
+      <div class="card">
+        <div class="grape-heading">
+          <h2>🍇 포도송이 칭찬스티커</h2>
+          <p class="muted">
+            매일 복약을 기록하고 30알의 포도송이를 완성해 보세요!
+          </p>
+          <div class="grape-count" id="grapeCount">0 / 30일</div>
+        </div>
+
+        <svg class="grape-svg"
+             viewBox="0 0 390 548"
+             xmlns="http://www.w3.org/2000/svg"
+             role="img"
+             aria-label="30일 포도송이 칭찬스티커">
+          <defs>
+            <radialGradient id="grapeFill" cx="30%" cy="25%">
+              <stop offset="0%" stop-color="#DFAAF5"/>
+              <stop offset="52%" stop-color="#A04BCF"/>
+              <stop offset="100%" stop-color="#652096"/>
+            </radialGradient>
+          </defs>
+
+          <path d="M193 139 Q176 79 167 25"
+                fill="none"
+                stroke="#B16B2B"
+                stroke-width="19"
+                stroke-linecap="round"/>
+
+          <path d="M187 134
+                   C154 49 86 38 34 85
+                   C74 89 76 112 52 130
+                   C114 109 145 166 187 134Z"
+                fill="#2CBF61"/>
+
+          <path d="M191 133
+                   C230 47 290 37 353 85
+                   C310 93 312 114 340 129
+                   C277 111 236 167 191 133Z"
+                fill="#19AB4E"/>
+
+          <path d="M188 132 Q113 78 58 97
+                   M190 132 Q278 76 328 94"
+                fill="none"
+                stroke="#9EE59F"
+                stroke-width="4"/>
+
+          <g id="grapeCells"></g>
+        </svg>
+
+        <div class="grape-legend">
+          <span><i class="dot"></i>아직 기록하지 않은 날</span>
+          <span><i class="dot done"></i>복약 기록 완료</span>
+        </div>
+
+        <p class="muted" id="grapeHelp"
+           style="text-align:center"></p>
+
+        <button class="btn full"
+                id="rewardButton"
+                type="button"
+                hidden>
+          🎬 30일 완주 축하 영상 보기
+        </button>
+      </div>
+    </section>
+
+    <!-- 약 확인 -->
+    <section class="page" id="page-meds">
+
+      <div class="card lavender">
+        <h2>💊 약 확인</h2>
+        <p>
+          기존 약과 새로 받은 약 사이에
+          주의가 필요한 예시 조합이 있는지 확인합니다.
+        </p>
+        <div class="notice red">
+          현재는 대표적인 5개 약물 조합만 비교하는 시연 기능입니다.
+          경고가 없더라도 안전하다는 뜻은 아닙니다.
+          실제 복용 여부는 의사 또는 약사에게 확인하세요.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🔎 약물 상호작용 확인</h3>
+
+        <label class="field-title" for="oldMeds">
+          평소 복용하던 약
+        </label>
+        <textarea id="oldMeds"
+                  placeholder="예: 와파린"></textarea>
+
+        <label class="field-title" for="newMeds">
+          새로 처방받은 약
+        </label>
+        <textarea id="newMeds"
+                  placeholder="예: 이부프로펜"></textarea>
+
+        <div class="btn-row">
+          <button class="btn" id="checkDrugs" type="button">
+            상호작용 확인
+          </button>
+          <button class="btn soft" id="drugExample" type="button">
+            🧪 예시 입력
+          </button>
+        </div>
+
+        <div class="output" id="drugOutput"></div>
+      </div>
+
+      <div class="card">
+        <h3>📸 약봉투 사진 인식</h3>
+
+        <p class="muted">
+          사진의 글자를 읽는 OCR 기능입니다.
+          인식 결과는 반드시 직접 확인하고 수정해 주세요.
+        </p>
+
+        <input id="drugPhoto" type="file" accept="image/*">
+
+        <img class="preview-photo"
+             id="drugPreview"
+             alt="약봉투 사진 미리보기">
+
+        <div class="btn-row">
+          <button class="btn" id="readPhoto" type="button">
+            📖 사진 인식
+          </button>
+          <button class="btn soft" id="samplePhoto" type="button">
+            시연용 약봉투 받기
+          </button>
+        </div>
+
+        <label class="field-title" for="ocrResult">
+          사진 속 글자 인식 결과
+        </label>
+
+        <textarea id="ocrResult"
+                  placeholder="인식한 글자가 나타납니다. 직접 수정할 수 있어요."></textarea>
+
+        <button class="btn outline full"
+                id="applyOcr"
+                type="button"
+                style="margin-top:10px">
+          확인한 약 이름을 새 약 입력란으로 가져오기
+        </button>
+
+        <p class="muted small" id="ocrStatus"></p>
+      </div>
+
+      <div class="card">
+        <h3>🌐 의약품 공개 정보</h3>
+
+        <p class="muted">
+          미국 FDA의 공개 허가사항을 참고용으로 검색합니다.
+          한국어 약 이름은 조회되지 않을 수 있습니다.
+        </p>
+
+        <input id="fdaName"
+               type="text"
+               placeholder="예: ibuprofen">
+
+        <button class="btn full"
+                id="searchFda"
+                type="button"
+                style="margin-top:10px">
+          FDA 공개 정보 검색
+        </button>
+
+        <div class="output" id="fdaOutput"></div>
+
+        <p class="muted" style="margin-top:13px">
+          추가 확인:
+          <a href="https://nedrug.mfds.go.kr/"
+             target="_blank"
+             rel="noopener noreferrer">의약품안전나라</a>
+          ·
+          <a id="naverLink"
+             href="https://search.naver.com/search.naver?query=%EC%9D%98%EC%95%BD%ED%92%88"
+             target="_blank"
+             rel="noopener noreferrer">네이버 약 정보 검색</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 재활 -->
+    <section class="page" id="page-rehab">
+
+      <div class="card lavender">
+        <h2>🏃 재활 가이드북</h2>
+        <p>단계별 운동 방법을 확인하고 오늘의 운동을 기록해 보세요.</p>
+        <div class="notice">
+          모든 운동은 담당 의료진이 허용한 경우에만 실시해야 합니다.
+          통증이나 불편함이 나타나면 무리하지 마세요.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>오늘의 운동 선택</h3>
+        <div id="exerciseList"></div>
+
+        <label class="field-title" for="customExercise">
+          나만의 운동 추가
+        </label>
+
+        <input id="customExercise"
+               type="text"
+               placeholder="예: 의료진이 알려준 팔 운동">
+
+        <button class="btn soft full"
+                id="addExercise"
+                type="button"
+                style="margin-top:10px">
+          + 운동 추가하기
+        </button>
+      </div>
+
+      <div class="card">
+        <h3 id="exerciseTitle">운동 가이드</h3>
+        <ol class="steps" id="exerciseSteps"></ol>
+
+        <label class="field-title" for="beforePain">
+          운동 전 통증
+        </label>
+        <input id="beforePain"
+               type="range" min="0" max="10" value="0">
+        <p id="beforeText" class="muted">0 / 10</p>
+
+        <label class="field-title" for="afterPain">
+          운동 후 통증
+        </label>
+        <input id="afterPain"
+               type="range" min="0" max="10" value="0">
+        <p id="afterText" class="muted">0 / 10</p>
+
+        <button class="btn full" id="finishExercise" type="button">
+          ✅ 운동 완료 기록
+        </button>
+
+        <p id="exerciseSaved" class="muted small"></p>
+      </div>
+    </section>
+
+    <!-- 리포트 -->
+    <section class="page" id="page-report">
+
+      <div class="card lavender">
+        <h2>📊 회복 리포트</h2>
+        <p class="muted" id="reportMode"></p>
+
+        <div class="stats">
+          <div class="stat">
+            <b id="medRate">0%</b>
+            <span>복약 기록 비율</span>
+          </div>
+
+          <div class="stat">
+            <b id="rehabRate">0%</b>
+            <span>재활 기록 비율</span>
+          </div>
+
+          <div class="stat">
+            <b id="painAverage">-</b>
+            <span>평균 통증 점수</span>
+          </div>
+
+          <div class="stat">
+            <b id="warningCount">0일</b>
+            <span>주의 상태 기록</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📈 최근 7일 복약 기록</h3>
+
+        <div class="chart" id="reportChart"></div>
+
+        <p id="reportNote" class="muted"></p>
+
+        <button class="btn full" id="copyReport" type="button">
+          📋 리포트 복사하기
+        </button>
+
+        <p id="reportCopied" class="muted small"></p>
+      </div>
+    </section>
+
+    <!-- 보호자 -->
+    <section class="page" id="page-family">
+
+      <div class="card lavender">
+        <h2>💛 보호자 안심 케어</h2>
+        <p>가족과 건강 기록을 공유하는 모습을 미리 체험할 수 있습니다.</p>
+
+        <div class="notice red">
+          현재는 실제 카카오톡 전송이나 보호자 알림이 아닌
+          화면 시뮬레이션입니다.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>💬 보호자 알림 미리보기</h3>
+
+        <div class="chat">
+          <div class="muted small">케어루프 · 가족 건강 알림</div>
+          <div class="chat-bubble" id="familyMessage"></div>
+        </div>
+
+        <div class="btn-row" style="margin-top:13px">
+          <button class="btn soft" id="refreshFamily" type="button">
+            🔄 새로고침
+          </button>
+          <button class="btn" id="copyFamily" type="button">
+            📋 문구 복사
+          </button>
+        </div>
+
+        <p id="familyCopied" class="muted small"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="nav" aria-label="하단 메뉴">
+    <button class="nav-btn active" data-page="home" type="button">
+      <span class="emoji">🏠</span>홈
+    </button>
+    <button class="nav-btn" data-page="meds" type="button">
+      <span class="emoji">💊</span>약 확인
+    </button>
+    <button class="nav-btn" data-page="rehab" type="button">
+      <span class="emoji">🏃</span>재활
+    </button>
+    <button class="nav-btn" data-page="report" type="button">
+      <span class="emoji">📊</span>리포트
+    </button>
+    <button class="nav-btn" data-page="family" type="button">
+      <span class="emoji">💛</span>보호자
+    </button>
+  </nav>
+</div>
+
+<!-- 안내 팝업 -->
+<div class="overlay" id="alertOverlay">
+  <div class="modal"
+       role="alertdialog"
+       aria-modal="true"
+       aria-labelledby="alertTitle">
+    <h2 id="alertTitle">안내</h2>
+    <p id="alertMessage"></p>
+    <button class="btn full" id="closeAlert" type="button">
+      확인
+    </button>
+  </div>
+</div>
+
+<!-- 30일 축하 영상 팝업 -->
+<div class="overlay" id="rewardOverlay">
+  <div class="modal"
+       role="dialog"
+       aria-modal="true"
+       aria-labelledby="rewardTitle">
+
+    <h2 id="rewardTitle">🎉 30일 완주 축하!</h2>
+
+    <p>
+      포도송이 30알을 모두 채우셨어요! 🍇💜
+    </p>
+
+    <p class="muted" id="rewardName"></p>
+
+    <video id="rewardVideo"
+           controls
+           playsinline
+           preload="metadata"></video>
+
+    <p class="muted" id="rewardStatus">
+      재생 버튼을 눌러 축하 영상을 확인해 주세요.
+    </p>
+
+    <div class="btn-row">
+      <button class="btn soft" id="anotherReward" type="button">
+        🔀 다른 영상
+      </button>
+      <button class="btn" id="closeReward" type="button">
+        닫기
+      </button>
     </div>
   </div>
+</div>
 
-  <script>
-    "use strict";
+<script>
+"use strict";
 
-    /*
-      ===================================================
-      CareLoop 케어루프
-      전체 실행 코드
+/* =====================================================
+   케어루프 전체 기능
+   GitHub에 업로드한 축하 영상 4개 연결
+   ===================================================== */
 
-      영상은 GitHub 저장소에 업로드한 파일을 사용합니다.
+/*
+  아래 네 영상은 index.html과 같은 위치에 있어야 합니다.
 
-      지원하는 파일:
-      careloop-warm.mp4 / .webm
-      careloop-fun.mp4 / .webm
-      careloop-family.mp4 / .webm
-      careloop-impact.mp4 / .webm
+  careloop-warm.mp4
+  careloop-fun.mp4
+  careloop-family.mp4
+  careloop-impact.mp4
+*/
 
-      파일이 하나만 있다면 그 영상만 재생됩니다.
-      여러 개가 있다면 랜덤 재생됩니다.
+const REWARD_VIDEOS = [
+  {
+    title: "💜 따뜻하고 감동적인 축하",
+    src: "careloop-warm.mp4"
+  },
+  {
+    title: "🎉 밝고 신나는 축하",
+    src: "careloop-fun.mp4"
+  },
+  {
+    title: "💗 손주의 다정한 응원",
+    src: "careloop-family.mp4"
+  },
+  {
+    title: "🏆 짧고 강렬한 축하",
+    src: "careloop-impact.mp4"
+  }
+];
 
-      기존 유튜브 보상 영상은 사용하지 않습니다.
-      ===================================================
-    */
+const STORAGE_KEY = "careloop_v35_state";
 
-    const STORAGE_KEY = "careloop_v35_state";
+const DRUG_PAIRS = [
+  {
+    a: ["와파린", "warfarin"],
+    b: ["이부프로펜", "ibuprofen"],
+    reason: "출혈 위험이 증가할 수 있습니다."
+  },
+  {
+    a: ["와파린", "warfarin"],
+    b: ["아스피린", "aspirin"],
+    reason: "출혈 위험이 증가할 수 있습니다."
+  },
+  {
+    a: ["실데나필", "sildenafil", "비아그라"],
+    b: ["니트로글리세린", "nitroglycerin"],
+    reason: "혈압이 위험하게 떨어질 수 있는 금기 조합입니다."
+  },
+  {
+    a: ["심바스타틴", "simvastatin"],
+    b: ["클래리스로마이신", "clarithromycin"],
+    reason: "근육 손상 등 심각한 부작용 위험이 증가할 수 있습니다."
+  },
+  {
+    a: ["스피로놀락톤", "spironolactone"],
+    b: ["염화칼륨", "potassium chloride"],
+    reason: "혈중 칼륨 농도가 과도하게 높아질 수 있습니다."
+  }
+];
 
-    const REWARD_VIDEOS = [
-      {
-        title: "💜 따뜻한 감동",
-        files: [
-          "careloop-warm.mp4",
-          "careloop-warm.webm",
-          "videos/careloop-warm.mp4",
-          "videos/careloop-warm.webm"
-        ]
-      },
-      {
-        title: "🎉 밝고 신나는 축하",
-        files: [
-          "careloop-fun.mp4",
-          "careloop-fun.webm",
-          "videos/careloop-fun.mp4",
-          "videos/careloop-fun.webm"
-        ]
-      },
-      {
-        title: "💗 손주의 응원",
-        files: [
-          "careloop-family.mp4",
-          "careloop-family.webm",
-          "videos/careloop-family.mp4",
-          "videos/careloop-family.webm"
-        ]
-      },
-      {
-        title: "🏆 짧고 강렬한 축하",
-        files: [
-          "careloop-impact.mp4",
-          "careloop-impact.webm",
-          "videos/careloop-impact.mp4",
-          "videos/careloop-impact.webm"
-        ]
-      }
-    ];
+const EXERCISES = [
+  {
+    id: "walk",
+    name: "🚶 평지 걷기",
+    steps: [
+      "의료진에게 걷기 운동이 허용되었는지 확인합니다.",
+      "평평하고 미끄럽지 않은 장소를 선택합니다.",
+      "의료진이 안내한 시간과 강도에 맞춰 천천히 걷습니다.",
+      "통증이나 어지러움이 느껴지면 중단하고 쉽니다."
+    ]
+  },
+  {
+    id: "ankle",
+    name: "🦶 발목 펌프 운동",
+    steps: [
+      "편안하게 앉거나 누운 자세를 취합니다.",
+      "발끝을 몸 쪽으로 천천히 당깁니다.",
+      "다시 반대 방향으로 천천히 뻗습니다.",
+      "의료진이 허용한 범위에서 반복합니다."
+    ]
+  },
+  {
+    id: "knee",
+    name: "🪑 앉아서 무릎 펴기",
+    steps: [
+      "안정적인 의자에 바르게 앉습니다.",
+      "한쪽 무릎을 편안한 범위까지 천천히 폅니다.",
+      "다리를 천천히 원래 위치로 내립니다.",
+      "반대쪽도 의료진의 안내에 따라 실시합니다."
+    ]
+  },
+  {
+    id: "stretch",
+    name: "🌿 가벼운 스트레칭",
+    steps: [
+      "의료진이 허용한 스트레칭인지 확인합니다.",
+      "반동 없이 천천히 움직입니다.",
+      "통증이 없는 편안한 범위에서 실시합니다.",
+      "무리하지 않고 충분히 쉽니다."
+    ]
+  }
+];
 
-    const DRUG_INTERACTIONS = [
-      {
-        a: ["와파린", "warfarin"],
-        b: ["이부프로펜", "ibuprofen"],
-        level: "주의",
-        reason: "함께 복용하면 출혈 위험이 증가할 수 있습니다."
-      },
-      {
-        a: ["와파린", "warfarin"],
-        b: ["아스피린", "aspirin"],
-        level: "주의",
-        reason: "출혈 위험이 증가할 수 있습니다."
-      },
-      {
-        a: ["실데나필", "sildenafil", "비아그라", "viagra"],
-        b: ["니트로글리세린", "nitroglycerin"],
-        level: "중요",
-        reason: "혈압이 위험하게 떨어질 수 있는 금기 조합입니다."
-      },
-      {
-        a: ["심바스타틴", "simvastatin"],
-        b: ["클래리스로마이신", "clarithromycin"],
-        level: "중요",
-        reason: "근육 손상 등 심각한 부작용 위험이 높아질 수 있습니다."
-      },
-      {
-        a: ["스피로놀락톤", "spironolactone"],
-        b: ["염화칼륨", "potassium chloride"],
-        level: "주의",
-        reason: "혈중 칼륨 농도가 과도하게 높아질 수 있습니다."
-      }
-    ];
+function $(id) {
+  return document.getElementById(id);
+}
 
-    const BASE_EXERCISES = [
-      {
-        id: "walk",
-        name: "🚶 평지 걷기",
-        steps: [
-          "담당 의료진에게 걷기 운동이 허용되었는지 확인합니다.",
-          "넘어질 위험이 적고 평평한 장소를 선택합니다.",
-          "의료진이 안내한 시간과 강도에 맞춰 천천히 걷습니다.",
-          "무리하지 말고 필요할 때 충분히 쉽니다."
-        ]
-      },
-      {
-        id: "ankle",
-        name: "🦶 발목 펌프 운동",
-        steps: [
-          "편안한 자세로 앉거나 눕습니다.",
-          "발끝을 몸 쪽으로 천천히 당깁니다.",
-          "발끝을 반대 방향으로 천천히 뻗습니다.",
-          "의료진이 안내한 범위와 횟수 안에서 반복합니다."
-        ]
-      },
-      {
-        id: "knee",
-        name: "🪑 앉아서 무릎 펴기",
-        steps: [
-          "안정적인 의자에 등을 기대고 앉습니다.",
-          "한쪽 무릎을 가능한 범위에서 천천히 폅니다.",
-          "무리하지 않고 편안한 위치로 되돌립니다.",
-          "반대쪽도 의료진의 지시에 맞춰 실시합니다."
-        ]
-      },
-      {
-        id: "stretch",
-        name: "🌿 가벼운 스트레칭",
-        steps: [
-          "의료진이 허용한 관절과 움직임만 선택합니다.",
-          "반동 없이 천천히 움직입니다.",
-          "통증이 없는 편안한 범위까지만 움직입니다.",
-          "무리하지 않고 충분히 휴식합니다."
-        ]
-      }
-    ];
+function todayString() {
+  const date = new Date();
 
-    function localDateString(date = new Date()) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0")
+  ].join("-");
+}
 
-      return `${year}-${month}-${day}`;
-    }
+function dateIndex(text) {
+  const parts = String(text).split("-").map(Number);
 
-    function dateNumber(value) {
-      const parts = String(value).split("-").map(Number);
+  if (parts.length !== 3 || parts.some(n => !Number.isFinite(n))) {
+    return 0;
+  }
 
-      if (parts.length !== 3 || parts.some(n => !Number.isFinite(n))) {
-        return 0;
-      }
+  return Math.floor(
+    Date.UTC(parts[0], parts[1] - 1, parts[2]) / 86400000
+  );
+}
 
-      return Math.floor(
-        Date.UTC(parts[0], parts[1] - 1, parts[2]) / 86400000
+function blankEntry() {
+  return {
+    med: false,
+    pain: null,
+    symptoms: [],
+    rehab: [],
+    simulated: false
+  };
+}
+
+function blankState() {
+  return {
+    mode: "demo",
+    demo: {
+      day: 1,
+      entries: {},
+      advanced: false
+    },
+    real: {
+      startDate: todayString(),
+      entries: {}
+    },
+    medications: {
+      existing: "",
+      new: "",
+      ocrText: ""
+    },
+    customExercises: []
+  };
+}
+
+function readState() {
+  let saved = null;
+
+  try {
+    saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+
+    if (!saved) {
+      saved = JSON.parse(
+        localStorage.getItem("careloop_v34_state") || "null"
       );
     }
+  } catch (error) {
+    saved = null;
+  }
 
-    function emptyEntry() {
-      return {
-        med: false,
-        pain: null,
-        symptoms: [],
-        rehab: [],
-        simulated: false
-      };
-    }
+  const base = blankState();
 
-    function defaultState() {
-      return {
-        mode: "demo",
-        demo: {
-          day: 1,
-          entries: {},
-          advanced: false
-        },
-        real: {
-          startDate: localDateString(),
-          entries: {}
-        },
-        medications: {
-          existing: "",
-          new: "",
-          ocrText: ""
-        },
-        customExercises: []
-      };
-    }
+  if (!saved || typeof saved !== "object") {
+    return base;
+  }
 
-    function safeJSON(text) {
-      try {
-        return text ? JSON.parse(text) : null;
-      } catch (error) {
-        return null;
-      }
-    }
+  base.mode = saved.mode === "real" ? "real" : "demo";
 
-    function loadState() {
-      const base = defaultState();
+  if (saved.demo && typeof saved.demo === "object") {
+    base.demo.day = [1, 2, 3, 30].includes(Number(saved.demo.day))
+      ? Number(saved.demo.day)
+      : 1;
 
-      let old = null;
+    base.demo.entries =
+      saved.demo.entries &&
+      typeof saved.demo.entries === "object"
+        ? saved.demo.entries
+        : {};
 
-      try {
-        old = safeJSON(localStorage.getItem(STORAGE_KEY));
+    base.demo.advanced = Boolean(saved.demo.advanced);
+  }
 
-        if (!old) {
-          const previousKeys = [
-            "careloop_v34_state",
-            "careloop_v33_state",
-            "careloop_v3_state"
-          ];
+  if (saved.real && typeof saved.real === "object") {
+    base.real.startDate =
+      typeof saved.real.startDate === "string"
+        ? saved.real.startDate
+        : todayString();
 
-          for (const key of previousKeys) {
-            const candidate = safeJSON(localStorage.getItem(key));
+    base.real.entries =
+      saved.real.entries &&
+      typeof saved.real.entries === "object"
+        ? saved.real.entries
+        : {};
+  }
 
-            if (candidate && typeof candidate === "object") {
-              old = candidate;
-              break;
-            }
-          }
-        }
-      } catch (error) {
-        return base;
-      }
+  if (saved.medications && typeof saved.medications === "object") {
+    base.medications.existing =
+      String(saved.medications.existing || "");
 
-      if (!old || typeof old !== "object") {
-        return base;
-      }
+    base.medications.new =
+      String(saved.medications.new || "");
 
-      // 이전 저장 형식 중 일치하는 필드를 가능한 범위에서 보존합니다.
-      base.mode = old.mode === "real" ? "real" : "demo";
+    base.medications.ocrText =
+      String(saved.medications.ocrText || "");
+  }
 
-      if (old.demo && typeof old.demo === "object") {
-        const demoDay = Number(
-          old.demo.day ?? old.demo.currentDay ?? 1
-        );
-
-        base.demo.day = demoDay === 30
-          ? 30
-          : Math.min(3, Math.max(1, demoDay));
-
-        base.demo.entries = (
-          old.demo.entries &&
-          typeof old.demo.entries === "object"
-        ) ? old.demo.entries : {};
-
-        base.demo.advanced = Boolean(old.demo.advanced);
-      }
-
-      if (old.real && typeof old.real === "object") {
-        base.real.startDate =
-          typeof old.real.startDate === "string"
-            ? old.real.startDate
-            : localDateString();
-
-        base.real.entries = (
-          old.real.entries &&
-          typeof old.real.entries === "object"
-        ) ? old.real.entries : {};
-      }
-
-      if (old.medications && typeof old.medications === "object") {
-        base.medications.existing = String(
-          old.medications.existing ?? ""
-        );
-
-        base.medications.new = String(
-          old.medications.new ?? ""
-        );
-
-        base.medications.ocrText = String(
-          old.medications.ocrText ?? ""
-        );
-      }
-
-      if (Array.isArray(old.customExercises)) {
-        base.customExercises = old.customExercises.filter(
-          item => item && typeof item.name === "string"
-        );
-      }
-
-      return base;
-    }
-
-    let state = loadState();
-    let selectedExerciseId = "walk";
-    let availableRewardCache = null;
-    let lastRewardTitle = "";
-
-    function saveState() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (error) {
-        console.warn("저장 공간에 기록하지 못했습니다.", error);
-      }
-    }
-
-    function element(id) {
-      return document.getElementById(id);
-    }
-
-    function escapeHTML(value) {
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    }
-
-    function showAlert(title, message) {
-      element("alertTitle").textContent = title;
-      element("alertMessage").textContent = message;
-      element("alertOverlay").classList.add("visible");
-    }
-
-    function hideAlert() {
-      element("alertOverlay").classList.remove("visible");
-    }
-
-    function getCurrentDay() {
-      if (state.mode === "demo") {
-        return state.demo.day;
-      }
-
-      const today = dateNumber(localDateString());
-      const start = dateNumber(state.real.startDate);
-
-      return today - start + 1;
-    }
-
-    function getEntries() {
-      return state.mode === "demo"
-        ? state.demo.entries
-        : state.real.entries;
-    }
-
-    function normalizeEntry(source) {
-      const entry = source && typeof source === "object"
-        ? source
-        : emptyEntry();
-
-      return {
-        med: Boolean(entry.med),
-        pain: Number.isFinite(Number(entry.pain)) &&
-          entry.pain !== null &&
-          entry.pain !== ""
-          ? Number(entry.pain)
-          : null,
-        symptoms: Array.isArray(entry.symptoms)
-          ? entry.symptoms
-          : [],
-        rehab: Array.isArray(entry.rehab)
-          ? entry.rehab
-          : [],
-        simulated: Boolean(entry.simulated)
-      };
-    }
-
-    function getEntry(day = getCurrentDay(), create = false) {
-      if (!Number.isInteger(day) || day < 1 || day > 30) {
-        return null;
-      }
-
-      const entries = getEntries();
-
-      if (!entries[day] && create) {
-        entries[day] = emptyEntry();
-      }
-
-      if (!entries[day]) {
-        return null;
-      }
-
-      if (create) {
-        entries[day] = normalizeEntry(entries[day]);
-        return entries[day];
-      }
-
-      return normalizeEntry(entries[day]);
-    }
-
-    function getCompletedCount() {
-      let result = 0;
-
-      for (let day = 1; day <= 30; day++) {
-        const entry = getEntry(day, false);
-
-        if (entry && entry.med) {
-          result++;
-        }
-      }
-
-      return result;
-    }
-
-    function rewardUnlocked() {
-      return getCompletedCount() === 30;
-    }
-
-    function switchTab(name) {
-      const target = element(`page-${name}`);
-
-      if (!target) {
-        return;
-      }
-
-      document.querySelectorAll(".tab-page").forEach(page => {
-        page.classList.toggle("active", page === target);
-      });
-
-      document.querySelectorAll(".nav-button").forEach(button => {
-        button.classList.toggle(
-          "active",
-          button.dataset.tab === name
-        );
-      });
-
-      if (name === "report") {
-        renderReport();
-      }
-
-      if (name === "family") {
-        renderFamily();
-      }
-
-      if (name === "rehab") {
-        renderRehab();
-      }
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    /*
-      ====================================
-      홈 화면과 30일 시연
-      ====================================
-    */
-
-    function renderHome() {
-      const day = getCurrentDay();
-
-      element("demoModeButton").classList.toggle(
-        "active",
-        state.mode === "demo"
+  if (Array.isArray(saved.customExercises)) {
+    base.customExercises =
+      saved.customExercises.filter(item =>
+        item &&
+        typeof item.name === "string" &&
+        Array.isArray(item.steps)
       );
+  }
 
-      element("realModeButton").classList.toggle(
-        "active",
-        state.mode === "real"
-      );
+  return base;
+}
 
-      element("demoControls").hidden = state.mode !== "demo";
+let state = readState();
+let chosenExercise = "walk";
+let lastRewardIndex = -1;
 
-      if (state.mode === "demo") {
-        element("dayStatus").textContent =
-          `🎬 발표 시연 · ${day}일차`;
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    console.warn("저장하지 못했습니다.", error);
+  }
+}
 
-        element("modeDescription").textContent =
-          "가상 날짜를 사용한 발표용 시연입니다. " +
-          "실제 복약 기록이 아니라는 점을 구분해 주세요.";
-      } else {
-        element("dayStatus").textContent = day > 30
-          ? "📆 실제 날짜 모드 · 30일 기록 기간 종료"
-          : `📆 실제 날짜 모드 · ${day}일차`;
+function currentDay() {
+  if (state.mode === "demo") {
+    return state.demo.day;
+  }
 
-        element("modeDescription").textContent =
-          "달력 날짜에 맞춰 하루 한 번 기록하는 모드입니다.";
-      }
+  return dateIndex(todayString()) -
+         dateIndex(state.real.startDate) + 1;
+}
 
-      const entry = getEntry(day);
+function activeEntries() {
+  return state.mode === "demo"
+    ? state.demo.entries
+    : state.real.entries;
+}
 
-      element("medStatus").textContent =
-        entry && entry.med
-          ? "✅ 오늘의 복약 완료가 기록되었습니다."
-          : "아직 복약 완료 기록이 없습니다.";
+function getEntry(day = currentDay(), create = false) {
+  if (!Number.isInteger(day) || day < 1 || day > 30) {
+    return null;
+  }
 
-      element("markMedButton").disabled =
-        day < 1 || day > 30 || Boolean(entry && entry.med);
+  const entries = activeEntries();
 
-      element("markMedButton").textContent =
-        entry && entry.med
-          ? "✅ 기록 완료"
-          : "✅ 오늘 약 복용 완료 기록하기";
+  if (!entries[day] && create) {
+    entries[day] = blankEntry();
+  }
 
-      element("painRange").value =
-        entry && entry.pain !== null
-          ? entry.pain
-          : 0;
+  return entries[day] || null;
+}
 
-      element("painValue").textContent =
-        `${element("painRange").value} / 10`;
+function completedCount() {
+  let count = 0;
 
-      document.querySelectorAll(
-        'input[name="symptom"]'
-      ).forEach(input => {
-        input.checked = Boolean(
-          entry && entry.symptoms.includes(input.value)
-        );
-      });
+  for (let day = 1; day <= 30; day++) {
+    const entry = getEntry(day);
 
-      element("saveHealthButton").disabled =
-        day < 1 || day > 30;
-
-      if (state.mode === "demo") {
-        const isRecorded = Boolean(entry && entry.med);
-
-        element("demoNextButton").hidden =
-          !(day < 3 && isRecorded);
-
-        const completedFirstThree =
-          [1, 2, 3].every(number => {
-            const item = state.demo.entries[number];
-            return Boolean(item && item.med);
-          });
-
-        element("demoFastButton").hidden =
-          !(day === 3 && completedFirstThree);
-
-        element("demoHint").textContent =
-          day === 30
-            ? "이제 30일차 복약 완료를 기록하면 축하 영상이 나옵니다."
-            : "1일차 → 2일차 → 3일차 순서로 기록한 뒤 " +
-              "30일차로 빠르게 이동할 수 있습니다.";
-      }
-
-      renderGrapes();
+    if (entry && entry.med) {
+      count++;
     }
-
-    function renderGrapes() {
-      const group = element("grapeCells");
-      const NS = "http://www.w3.org/2000/svg";
-      const rowCounts = [4, 5, 6, 5, 4, 3, 2, 1];
-
-      group.replaceChildren();
-
-      let number = 1;
-
-      rowCounts.forEach((count, row) => {
-        const firstX = 195 - ((count - 1) * 54) / 2;
-
-        for (let column = 0; column < count; column++) {
-          const x = firstX + column * 54;
-          const y = 135 + row * 52;
-
-          const entry = getEntry(number);
-          const completed = Boolean(entry && entry.med);
-
-          const circle = document.createElementNS(NS, "circle");
-
-          circle.setAttribute("cx", x);
-          circle.setAttribute("cy", y);
-          circle.setAttribute("r", 25.5);
-          circle.setAttribute(
-            "fill",
-            completed ? "url(#berryGradient)" : "#FFFFFF"
-          );
-          circle.setAttribute("stroke", "#8C3CBD");
-          circle.setAttribute("stroke-width", "6");
-
-          const text = document.createElementNS(NS, "text");
-
-          text.setAttribute("x", x);
-          text.setAttribute("y", y + 6);
-          text.setAttribute("text-anchor", "middle");
-          text.setAttribute("font-size", "18");
-          text.setAttribute("font-weight", "900");
-          text.setAttribute(
-            "fill",
-            completed ? "#FFFFFF" : "#8C3CBD"
-          );
-
-          text.textContent = String(number);
-
-          group.append(circle, text);
-
-          number++;
-        }
-      });
-
-      const count = getCompletedCount();
-
-      element("grapeCount").textContent =
-        `${count} / 30일`;
-
-      element("grapeDescription").textContent =
-        state.mode === "demo" && state.demo.advanced
-          ? "발표 시연 모드: 4~29일차는 가상으로 채워진 기록입니다."
-          : "매일 약 복용 완료를 기록하면 포도알이 채워집니다.";
-
-      element("rewardButton").hidden = !rewardUnlocked();
-    }
-
-    function markMedicine() {
-      const day = getCurrentDay();
-      const entry = getEntry(day, true);
-
-      if (!entry) {
-        showAlert(
-          "기록할 수 없습니다",
-          "현재 30일 기록 범위를 벗어났습니다."
-        );
-        return;
-      }
-
-      if (entry.med) {
-        return;
-      }
-
-      entry.med = true;
-      saveState();
-      renderHome();
-      renderReport();
-
-      if (rewardUnlocked()) {
-        showReward();
-      }
-    }
-
-    function nextDemoDay() {
-      if (state.mode !== "demo") {
-        return;
-      }
-
-      const day = state.demo.day;
-      const entry = getEntry(day);
-
-      if (day >= 3 || !entry || !entry.med) {
-        showAlert(
-          "복약 기록을 먼저 완료해 주세요",
-          "현재 날짜의 복약 완료를 기록해야 다음 날로 이동할 수 있습니다."
-        );
-        return;
-      }
-
-      state.demo.day++;
-      saveState();
-      renderHome();
-    }
-
-    function fastForwardDemo() {
-      const firstThreeDone =
-        [1, 2, 3].every(day => {
-          const entry = state.demo.entries[day];
-          return Boolean(entry && entry.med);
-        });
-
-      if (
-        state.mode !== "demo" ||
-        state.demo.day !== 3 ||
-        !firstThreeDone
-      ) {
-        return;
-      }
-
-      for (let day = 4; day <= 29; day++) {
-        state.demo.entries[day] = {
-          med: true,
-          pain: null,
-          symptoms: [],
-          rehab: [],
-          simulated: true
-        };
-      }
-
-      state.demo.day = 30;
-      state.demo.advanced = true;
-
-      saveState();
-      renderHome();
-
-      showAlert(
-        "🎬 30일차로 이동했습니다",
-        "발표 시연을 위해 4~29일차 복약 기록을 " +
-        "가상 데이터로 채웠습니다. " +
-        "이제 30일차 복약 완료를 누르면 보상 영상이 나타납니다."
-      );
-    }
-
-    function saveHealth() {
-      const entry = getEntry(getCurrentDay(), true);
-
-      if (!entry) {
-        return;
-      }
-
-      const pain = Number(element("painRange").value);
-
-      const symptoms = Array.from(
-        document.querySelectorAll(
-          'input[name="symptom"]:checked'
-        )
-      ).map(input => input.value);
-
-      entry.pain = pain;
-      entry.symptoms = symptoms;
-
-      saveState();
-
-      element("healthSaveStatus").textContent =
-        "✅ 건강 기록을 저장했습니다.";
-
-      renderReport();
-
-      if (pain >= 7 || symptoms.length > 0) {
-        const urgent = symptoms.includes("가슴 통증") ||
-          symptoms.includes("호흡 곤란");
-
-        showAlert(
-          "⚠️ 건강 상태 확인 안내",
-          urgent
-            ? "가슴 통증이나 호흡 곤란은 응급 상황일 수 있습니다. " +
-              "실제로 증상이 있다면 즉시 119 등 응급 도움을 요청하세요. " +
-              "이 앱은 응급 신고를 대신하지 않습니다."
-            : "심한 통증이나 이상 증상이 기록되었습니다. " +
-              "증상이 계속되거나 악화되면 의료진에게 상담하세요. " +
-              "이 안내는 진단이 아닙니다."
-        );
-      }
-    }
-
-    /*
-      ====================================
-      보상 영상 자동 탐색
-      ====================================
-    */
-
-    async function fileExists(file) {
-      try {
-        const response = await fetch(file, {
-          method: "HEAD",
-          cache: "no-store"
-        });
-
-        return response.ok;
-      } catch (error) {
-        return false;
-      }
-    }
-
-    async function findAvailableVideos() {
-      if (availableRewardCache) {
-        return availableRewardCache;
-      }
-
-      const checked = await Promise.all(
-        REWARD_VIDEOS.map(async item => {
-          for (const file of item.files) {
-            if (await fileExists(file)) {
-              return {
-                title: item.title,
-                file
-              };
-            }
-          }
-
-          return null;
-        })
-      );
-
-      const available = checked.filter(Boolean);
-
-      // 영상 업로드 후 새로고침하면 다시 탐색할 수 있습니다.
-      if (available.length > 0) {
-        availableRewardCache = available;
-      }
-
-      return available;
-    }
-
-    function stopRewardVideo() {
-      const container = element("rewardVideoContainer");
-      const video = container.querySelector("video");
-
-      if (video) {
-        video.pause();
-        video.removeAttribute("src");
-        video.load();
-      }
-
-      container.replaceChildren();
-    }
-
-    async function showReward() {
-      element("rewardOverlay").classList.add("visible");
-
-      element("rewardVideoTitle").textContent =
-        "축하 영상을 찾고 있습니다.";
-
-      element("rewardVideoStatus").textContent = "";
-
-      stopRewardVideo();
-
-      const videos = await findAvailableVideos();
-
-      if (!element("rewardOverlay").classList.contains("visible")) {
-        return;
-      }
-
-      if (videos.length === 0) {
-        element("rewardVideoTitle").textContent =
-          "🎉 포도송이 30알 완성!";
-
-        element("rewardVideoStatus").textContent =
-          "GitHub에 올린 영상 파일을 찾지 못했어요. " +
-          "저장소의 index.html과 같은 위치에 " +
-          "careloop-warm.mp4 또는 careloop-warm.webm " +
-          "파일을 업로드해 주세요.";
-
-        element("anotherRewardButton").hidden = true;
-        return;
-      }
-
-      element("anotherRewardButton").hidden =
-        videos.length < 2;
-
-      let candidates = videos.filter(
-        item => item.title !== lastRewardTitle
-      );
-
-      if (candidates.length === 0) {
-        candidates = videos;
-      }
-
-      const chosen = candidates[
-        Math.floor(Math.random() * candidates.length)
-      ];
-
-      lastRewardTitle = chosen.title;
-
-      const video = document.createElement("video");
-
-      video.controls = true;
-      video.autoplay = true;
-      video.playsInline = true;
-      video.preload = "metadata";
-      video.src = chosen.file;
-
-      video.addEventListener("error", () => {
-        element("rewardVideoStatus").textContent =
-          "영상 파일을 열 수 없습니다. " +
-          "파일 확장자와 실제 저장 형식이 맞는지 확인해 주세요.";
-      });
-
-      element("rewardVideoContainer").replaceChildren(video);
-
-      element("rewardVideoTitle").textContent =
-        `${chosen.title} · 30일 완주 보상`;
-
-      element("rewardVideoStatus").textContent =
-        "화면의 ▶ 버튼으로 축하 영상을 재생할 수 있습니다.";
-
-      video.play().catch(() => {
-        // 자동 재생이 차단된 경우 사용자가 직접 ▶을 누르면 됩니다.
-      });
-    }
-
-    function hideReward() {
-      element("rewardOverlay").classList.remove("visible");
-      stopRewardVideo();
-    }
-
-    /*
-      ====================================
-      약물 상호작용 예시 검사
-      ====================================
-    */
-
-    function hasDrug(text, names) {
-      const normalized = String(text)
-        .toLowerCase()
-        .replace(/\s+/g, " ");
-
-      return names.some(
-        name => normalized.includes(name.toLowerCase())
-      );
-    }
-
-    function analyzeMedicines() {
-      const existing = element("existingMeds").value.trim();
-      const newMeds = element("newMeds").value.trim();
-
-      state.medications.existing = existing;
-      state.medications.new = newMeds;
-
-      saveState();
-
-      if (!existing || !newMeds) {
-        element("medResult").textContent =
-          "기존 약과 새로 받은 약 이름을 모두 입력해 주세요.";
-        return;
-      }
-
-      const matches = [];
-
-      for (const pair of DRUG_INTERACTIONS) {
-        const oldHasA = hasDrug(existing, pair.a);
-        const oldHasB = hasDrug(existing, pair.b);
-        const newHasA = hasDrug(newMeds, pair.a);
-        const newHasB = hasDrug(newMeds, pair.b);
-
-        if (
-          (oldHasA && newHasB) ||
-          (oldHasB && newHasA)
-        ) {
-          matches.push(pair);
-        }
-      }
-
-      if (matches.length === 0) {
-        element("medResult").textContent =
-          "현재 등록된 5개 예시 조합과 일치하는 항목은 없습니다.\n\n" +
-          "⚠️ 이것은 두 약을 함께 복용해도 안전하다는 뜻이 아닙니다. " +
-          "등록되지 않은 약물과 상호작용은 확인하지 못합니다. " +
-          "복용 여부는 반드시 의사 또는 약사에게 문의하세요.";
-        return;
-      }
-
-      let output =
-        "⚠️ 등록된 예시 상호작용이 확인되었습니다.\n\n";
-
-      matches.forEach((pair, index) => {
-        output +=
-          `${index + 1}. ${pair.a[0]} + ${pair.b[0]}\n` +
-          `중요도: ${pair.level}\n` +
-          `${pair.reason}\n\n`;
-      });
-
-      output +=
-        "※ 실제 복용 가능 여부를 판정하는 기능이 아닙니다. " +
-        "처방 변경이나 약 복용 중단을 임의로 결정하지 마세요.";
-
-      element("medResult").textContent = output;
-    }
-
-    function loadSampleMedicine() {
-      element("existingMeds").value = "와파린";
-      element("newMeds").value = "이부프로펜";
-      analyzeMedicines();
-    }
-
-    /*
-      ====================================
-      시연용 가상 약봉투 이미지
-      ====================================
-    */
-
-    function downloadSampleBag() {
-      const canvas = document.createElement("canvas");
-      canvas.width = 900;
-      canvas.height = 1200;
-
-      const ctx = canvas.getContext("2d");
-
-      ctx.fillStyle = "#eae6df";
-      ctx.fillRect(0, 0, 900, 1200);
-
-      ctx.fillStyle = "#fffefa";
-      ctx.fillRect(85, 80, 730, 1040);
-
-      ctx.strokeStyle = "#b8b8b8";
-      ctx.lineWidth = 3;
-      ctx.strokeRect(85, 80, 730, 1040);
-
-      ctx.fillStyle = "#3378a6";
-      ctx.fillRect(85, 80, 730, 145);
-
-      ctx.textAlign = "center";
-      ctx.fillStyle = "#fff";
-      ctx.font = "bold 50px sans-serif";
-      ctx.fillText("케어루프 시연용 약봉투", 450, 163);
-
-      ctx.fillStyle = "#333";
-      ctx.textAlign = "left";
-
-      ctx.font = "bold 34px sans-serif";
-      ctx.fillText("가상 환자: 김케어", 145, 315);
-
-      ctx.font = "28px sans-serif";
-      ctx.fillText("조제일: 2026-11-22", 145, 370);
-      ctx.fillText("시연용 처방 정보", 145, 425);
-
-      ctx.strokeStyle = "#ddd";
-      ctx.beginPath();
-      ctx.moveTo(140, 470);
-      ctx.lineTo(760, 470);
-      ctx.stroke();
-
-      ctx.font = "bold 40px sans-serif";
-      ctx.fillText("약품명", 145, 550);
-      ctx.fillText("이부프로펜", 145, 635);
-
-      ctx.font = "29px sans-serif";
-      ctx.fillText("※ 실제 처방전이 아닙니다.", 145, 745);
-      ctx.fillText("OCR 체험을 위한 가상 이미지", 145, 805);
-
-      ctx.fillStyle = "#9c3549";
-      ctx.font = "bold 32px sans-serif";
-      ctx.fillText("실제 복약에 사용하지 마세요", 145, 955);
-
-      const link = document.createElement("a");
-      link.download = "careloop-sample-medicine-bag.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    }
-
-    /*
-      ====================================
-      약봉투 OCR
-      ====================================
-    */
-
-    function loadTesseract() {
-      return new Promise((resolve, reject) => {
-        if (
-          window.Tesseract &&
-          typeof window.Tesseract.recognize === "function"
-        ) {
-          resolve();
-          return;
-        }
-
-        const existing = document.querySelector(
-          'script[data-careloop-ocr="true"]'
-        );
-
-        if (existing) {
-          existing.addEventListener("load", resolve, { once: true });
-          existing.addEventListener("error", reject, { once: true });
-          return;
-        }
-
-        const script = document.createElement("script");
-
-        script.dataset.careloopOcr = "true";
-        script.src =
-          "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
-
-        script.onload = resolve;
-        script.onerror = () => reject(
-          new Error("OCR 라이브러리를 불러오지 못했습니다.")
-        );
-
-        document.head.appendChild(script);
-      });
-    }
-
-    async function recognizeMedicinePhoto() {
-      const file = element("medicinePhoto").files[0];
-
-      if (!file) {
-        showAlert(
-          "사진이 없습니다",
-          "먼저 약봉투 사진을 선택해 주세요."
-        );
-        return;
-      }
-
-      const button = element("ocrButton");
-      button.disabled = true;
-
-      element("ocrStatus").textContent =
-        "사진 속 글자를 인식하고 있습니다. 인터넷 연결이 필요합니다.";
-
-      try {
-        await loadTesseract();
-
-        const result = await window.Tesseract.recognize(
-          file,
-          "kor+eng"
-        );
-
-        const recognized = String(
-          result && result.data
-            ? result.data.text || ""
-            : ""
-        ).trim();
-
-        element("ocrText").value = recognized;
-
-        state.medications.ocrText = recognized;
-        saveState();
-
-        element("ocrStatus").textContent = recognized
-          ? "인식 완료! 약 이름과 용량을 직접 확인한 뒤 " +
-            "새로운 약 입력란에 정확한 이름을 입력하세요."
-          : "글자를 인식하지 못했습니다. " +
-            "사진을 다시 찍거나 약 이름을 직접 입력해 주세요.";
-      } catch (error) {
-        element("ocrStatus").textContent =
-          "사진 인식에 실패했습니다. " +
-          "인터넷 연결을 확인하거나 약 이름을 직접 입력해 주세요.";
-      } finally {
-        button.disabled = false;
-      }
-    }
-
-    /*
-      ====================================
-      FDA 공개 정보 검색
-      ====================================
-    */
-
-    async function searchFDA() {
-      const name = element("fdaDrugName").value.trim();
-
-      if (!name) {
-        element("fdaResult").textContent =
-          "검색할 약 이름을 입력해 주세요.";
-        return;
-      }
-
-      element("naverDrugLink").href =
-        "https://search.naver.com/search.naver?query=" +
-        encodeURIComponent(name + " 의약품 정보");
-
-      const button = element("fdaButton");
-
-      button.disabled = true;
-
-      element("fdaResult").textContent =
-        "미국 FDA 공개 데이터를 검색하고 있습니다.";
-
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 10000);
-
-      try {
-        const query =
-          `openfda.generic_name:"${name.replace(/"/g, "")}"` +
-          `+openfda.brand_name:"${name.replace(/"/g, "")}"`;
-
-        const url =
-          "https://api.fda.gov/drug/label.json?search=" +
-          encodeURIComponent(query) +
-          "&limit=1";
-
-        const response = await fetch(url, {
-          signal: controller.signal
-        });
-
-        if (!response.ok) {
-          throw new Error("조회 결과가 없습니다.");
-        }
-
-        const data = await response.json();
-        const item = data.results && data.results[0];
-
-        if (!item) {
-          throw new Error("해당 약 이름을 찾지 못했습니다.");
-        }
-
-        const warnings = Array.isArray(item.warnings)
-          ? item.warnings.join(" ")
-          : "";
-
-        const contraindications =
-          Array.isArray(item.contraindications)
-            ? item.contraindications.join(" ")
-            : "";
-
-        const information =
-          (warnings || contraindications ||
-           "표시 가능한 경고 정보가 없습니다.")
-          .slice(0, 1200);
-
-        element("fdaResult").textContent =
-          `검색어: ${name}\n\n` +
-          `미국 FDA 공개 허가사항 발췌:\n${information}\n\n` +
-          "※ 영어 원문 일부를 보여주는 참고 기능입니다. " +
-          "한국의 의약품 병용금기 판정이나 " +
-          "전문가 상담을 대신하지 않습니다.";
-      } catch (error) {
-        element("fdaResult").textContent =
-          "공개 데이터 검색에 실패했거나 해당 약 정보를 " +
-          "찾지 못했습니다.\n\n" +
-          "검색 실패는 약의 안전성을 의미하지 않습니다. " +
-          "의약품안전나라 또는 약사에게 확인하세요.";
-      } finally {
-        clearTimeout(timeout);
-        button.disabled = false;
-      }
-    }
-
-    /*
-      ====================================
-      재활 운동
-      ====================================
-    */
-
-    function allExercises() {
-      return [
-        ...BASE_EXERCISES,
-        ...state.customExercises
-      ];
-    }
-
-    function getSelectedExercise() {
-      return allExercises().find(
-        item => item.id === selectedExerciseId
-      ) || BASE_EXERCISES[0];
-    }
-
-    function renderRehab() {
-      const list = element("exerciseList");
-      const exercises = allExercises();
-
-      list.replaceChildren();
-
-      exercises.forEach(exercise => {
-        const button = document.createElement("button");
-
-        button.type = "button";
-        button.className = "exercise-choice";
-
-        if (exercise.id === selectedExerciseId) {
-          button.classList.add("active");
-        }
-
-        button.textContent = exercise.name;
-
-        button.addEventListener("click", () => {
-          selectedExerciseId = exercise.id;
-          renderRehab();
-        });
-
-        list.appendChild(button);
-      });
-
-      const selected = getSelectedExercise();
-
-      element("exerciseTitle").textContent = selected.name;
-
-      const steps = element("exerciseSteps");
-      steps.replaceChildren();
-
-      selected.steps.forEach(step => {
-        const li = document.createElement("li");
-        li.textContent = step;
-        steps.appendChild(li);
-      });
-
-      element("beforePainText").textContent =
-        `${element("beforePain").value} / 10`;
-
-      element("afterPainText").textContent =
-        `${element("afterPain").value} / 10`;
-
-      element("completeExerciseButton").disabled =
-        getCurrentDay() < 1 || getCurrentDay() > 30;
-    }
-
-    function addCustomExercise() {
-      const name = element("customExercise").value.trim();
-
-      if (!name) {
-        showAlert(
-          "운동 이름을 입력해 주세요",
-          "추가할 운동의 이름을 입력해야 합니다."
-        );
-        return;
-      }
-
-      const exercise = {
-        id: `custom-${Date.now()}`,
-        name: "📝 " + name,
-        steps: [
-          "담당 의료진이 허용한 운동인지 먼저 확인합니다.",
-          "담당 의료진이 설명한 정확한 방법과 강도를 따릅니다.",
-          "통증이나 불편함이 생기면 무리하지 않습니다."
-        ]
-      };
-
-      state.customExercises.push(exercise);
-
-      selectedExerciseId = exercise.id;
-
-      element("customExercise").value = "";
-
-      saveState();
-      renderRehab();
-    }
-
-    function recordExercise() {
-      const entry = getEntry(getCurrentDay(), true);
-
-      if (!entry) {
-        return;
-      }
-
-      const selected = getSelectedExercise();
-      const before = Number(element("beforePain").value);
-      const after = Number(element("afterPain").value);
-
-      entry.rehab.push({
-        id: selected.id,
-        name: selected.name,
-        before,
-        after,
-        recordedAt: new Date().toISOString()
-      });
-
-      saveState();
-
-      element("exerciseStatus").textContent =
-        "✅ 오늘의 운동 기록이 저장되었습니다.";
-
-      renderReport();
-
-      if (after >= 7 || after > before + 2) {
-        showAlert(
-          "⚠️ 운동 후 통증 안내",
-          "운동 후 통증이 높거나 크게 증가했습니다. " +
-          "운동을 무리하게 지속하지 말고 " +
-          "담당 의료진에게 상담하세요."
-        );
-      }
-    }
-
-    /*
-      ====================================
-      리포트
-      ====================================
-    */
-
-    function reportDays() {
-      const entries = getEntries();
-
-      let endDay;
-
-      if (state.mode === "demo") {
-        endDay = state.demo.day;
-      } else {
-        endDay = Math.min(30, Math.max(1, getCurrentDay()));
-      }
-
-      const startDay = Math.max(1, endDay - 6);
-      const result = [];
-
-      for (let day = startDay; day <= endDay; day++) {
-        result.push({
-          day,
-          entry: entries[day]
-            ? normalizeEntry(entries[day])
-            : emptyEntry()
-        });
-      }
-
-      return result;
-    }
-
-    function reportSummary() {
-      const rows = reportDays();
-      const total = rows.length || 1;
-
-      const medicineDays =
-        rows.filter(row => row.entry.med).length;
-
-      const rehabDays =
-        rows.filter(
-          row => row.entry.rehab.length > 0
-        ).length;
-
-      const pains =
-        rows
-          .map(row => row.entry.pain)
-          .filter(value => value !== null);
-
-      const averagePain = pains.length
-        ? pains.reduce((a, b) => a + b, 0) / pains.length
-        : null;
-
-      const warningDays =
-        rows.filter(row =>
-          (row.entry.pain !== null &&
-           row.entry.pain >= 7) ||
-          row.entry.symptoms.length > 0
-        ).length;
-
-      const simulatedDays =
-        rows.filter(row => row.entry.simulated).length;
-
-      return {
-        rows,
-        medicineRate: Math.round(
-          medicineDays / total * 100
-        ),
-        rehabRate: Math.round(
-          rehabDays / total * 100
-        ),
-        averagePain,
-        warningDays,
-        simulatedDays
-      };
-    }
-
-    function renderReport() {
-      const summary = reportSummary();
-
-      element("reportMode").textContent =
-        state.mode === "demo"
-          ? "🎬 발표 시연 기록 · 최근 최대 7개 날짜"
-          : "📆 실제 날짜 기록 · 최근 최대 7개 날짜";
-
-      element("reportMedRate").textContent =
-        summary.medicineRate + "%";
-
-      element("reportRehabRate").textContent =
-        summary.rehabRate + "%";
-
-      element("reportPainAverage").textContent =
-        summary.averagePain === null
-          ? "-"
-          : summary.averagePain.toFixed(1);
-
-      element("reportWarningDays").textContent =
-        summary.warningDays + "일";
-
-      const bars = element("reportBars");
-      bars.replaceChildren();
-
-      summary.rows.forEach(row => {
-        const col = document.createElement("div");
-        col.className = "bar-column";
-
-        const bar = document.createElement("div");
-        bar.className =
-          "bar" + (row.entry.med ? " filled" : "");
-
-        bar.style.height =
-          row.entry.med ? "85%" : "6%";
-
-        const caption = document.createElement("div");
-        caption.className = "bar-caption";
-        caption.textContent = row.day + "일";
-
-        col.append(bar, caption);
-        bars.appendChild(col);
-      });
-
-      element("reportFootnote").textContent =
-        summary.simulatedDays > 0
-          ? `※ 이 구간에는 가상으로 생성된 복약 기록 ` +
-            `${summary.simulatedDays}일이 포함되어 있습니다. ` +
-            "실제 건강 데이터로 해석하면 안 됩니다."
-          : "※ 입력한 기록을 요약한 참고 자료이며 " +
-            "의학적 평가나 진단 결과가 아닙니다.";
-    }
-
-    async function copyText(value) {
-      try {
-        if (navigator.clipboard &&
-            navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(value);
-          return true;
-        }
-
-        const temp = document.createElement("textarea");
-        temp.value = value;
-        document.body.appendChild(temp);
-        temp.select();
-
-        const copied = document.execCommand("copy");
-        temp.remove();
-
-        return copied;
-      } catch (error) {
-        return false;
-      }
-    }
-
-    async function copyReport() {
-      const data = reportSummary();
-
-      const report = [
-        "🍇 CareLoop 건강 기록 리포트",
-        state.mode === "demo"
-          ? "[발표 시연용 데이터]"
-          : "[사용자가 직접 입력한 기록]",
-        "",
-        `복약 기록 비율: ${data.medicineRate}%`,
-        `재활 기록 비율: ${data.rehabRate}%`,
-        `평균 통증: ${
-          data.averagePain === null
-            ? "기록 없음"
-            : data.averagePain.toFixed(1)
-        }`,
-        `주의 기록: ${data.warningDays}일`,
-        `가상 생성 기록: ${data.simulatedDays}일`,
-        "",
-        "※ 의료적 진단이 아닌 참고용 요약입니다."
-      ].join("\n");
-
-      const copied = await copyText(report);
-
-      element("copyReportStatus").textContent = copied
-        ? "✅ 리포트가 복사되었습니다."
-        : "복사하지 못했습니다. 브라우저 권한을 확인해 주세요.";
-    }
-
-    /*
-      ====================================
-      보호자 알림 시뮬레이션
-      ====================================
-    */
-
-    function familyMessageText() {
-      const day = getCurrentDay();
-      const entry = getEntry(day);
-
-      const med = entry && entry.med
-        ? "✅ 복약 완료 기록"
-        : "⏳ 복약 완료 기록 없음";
-
-      const pain = entry && entry.pain !== null
-        ? `🌡️ 통증 점수: ${entry.pain}/10`
-        : "🌡️ 통증 기록 없음";
-
-      const rehab = entry && entry.rehab.length > 0
-        ? `🏃 재활 운동 ${entry.rehab.length}개 기록`
-        : "🏃 재활 기록 없음";
-
-      const warning =
-        entry &&
-        (
-          (entry.pain !== null && entry.pain >= 7) ||
-          entry.symptoms.length > 0
-        )
-          ? "\n⚠️ 주의가 필요한 건강 상태가 기록되었습니다."
-          : "";
-
-      return [
-        "🍇 케어루프 건강 알림",
-        "",
-        state.mode === "demo"
-          ? `발표 시연 ${day}일차`
-          : `실제 날짜 ${day}일차`,
-        med,
-        pain,
-        rehab,
-        warning,
-        "",
-        "※ 실제 발송되지 않는 시뮬레이션 메시지입니다."
-      ].join("\n");
-    }
-
-    function renderFamily() {
-      element("familyMessage").textContent =
-        familyMessageText();
-    }
-
-    async function copyFamily() {
-      const copied = await copyText(familyMessageText());
-
-      element("familyCopyStatus").textContent = copied
-        ? "✅ 알림 문구가 복사되었습니다."
-        : "복사하지 못했습니다.";
-    }
-
-    /*
-      ====================================
-      이벤트 연결
-      ====================================
-    */
-
-    document.querySelectorAll(".nav-button").forEach(button => {
-      button.addEventListener("click", () => {
-        switchTab(button.dataset.tab);
-      });
-    });
-
-    element("demoModeButton").addEventListener("click", () => {
-      state.mode = "demo";
-      saveState();
-      renderHome();
-    });
-
-    element("realModeButton").addEventListener("click", () => {
-      state.mode = "real";
-      saveState();
-      renderHome();
-    });
-
-    element("markMedButton").addEventListener(
-      "click",
-      markMedicine
+  }
+
+  return count;
+}
+
+function showMessage(title, message) {
+  $("alertTitle").textContent = title;
+  $("alertMessage").textContent = message;
+  $("alertOverlay").classList.add("open");
+}
+
+function closeMessage() {
+  $("alertOverlay").classList.remove("open");
+}
+
+function openTab(name) {
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.toggle(
+      "active",
+      page.id === "page-" + name
     );
+  });
 
-    element("demoNextButton").addEventListener(
-      "click",
-      nextDemoDay
+  document.querySelectorAll(".nav-btn").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === name
     );
+  });
 
-    element("demoFastButton").addEventListener(
-      "click",
-      fastForwardDemo
-    );
-
-    element("demoResetButton").addEventListener("click", () => {
-      const confirmed = confirm(
-        "발표 시연 기록을 처음부터 시작할까요?\n" +
-        "실제 날짜 모드의 기록은 유지됩니다."
-      );
-
-      if (!confirmed) {
-        return;
-      }
-
-      state.demo = {
-        day: 1,
-        entries: {},
-        advanced: false
-      };
-
-      saveState();
-      renderHome();
-      renderReport();
-    });
-
-    element("painRange").addEventListener("input", event => {
-      element("painValue").textContent =
-        `${event.target.value} / 10`;
-    });
-
-    element("saveHealthButton").addEventListener(
-      "click",
-      saveHealth
-    );
-
-    element("rewardButton").addEventListener(
-      "click",
-      showReward
-    );
-
-    element("anotherRewardButton").addEventListener(
-      "click",
-      showReward
-    );
-
-    element("closeRewardButton").addEventListener(
-      "click",
-      hideReward
-    );
-
-    element("closeAlertButton").addEventListener(
-      "click",
-      hideAlert
-    );
-
-    element("medSampleButton").addEventListener(
-      "click",
-      loadSampleMedicine
-    );
-
-    element("analyzeMedsButton").addEventListener(
-      "click",
-      analyzeMedicines
-    );
-
-    element("sampleBagButton").addEventListener(
-      "click",
-      downloadSampleBag
-    );
-
-    element("medicinePhoto").addEventListener("change", event => {
-      const file = event.target.files[0];
-      const preview = element("medicinePreview");
-
-      if (!file) {
-        preview.style.display = "none";
-        preview.removeAttribute("src");
-        return;
-      }
-
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        preview.src = reader.result;
-        preview.style.display = "block";
-      };
-
-      reader.readAsDataURL(file);
-    });
-
-    element("ocrButton").addEventListener(
-      "click",
-      recognizeMedicinePhoto
-    );
-
-    element("ocrText").addEventListener("input", () => {
-      state.medications.ocrText =
-        element("ocrText").value;
-      saveState();
-    });
-
-    element("existingMeds").addEventListener("input", () => {
-      state.medications.existing =
-        element("existingMeds").value;
-      saveState();
-    });
-
-    element("newMeds").addEventListener("input", () => {
-      state.medications.new =
-        element("newMeds").value;
-      saveState();
-    });
-
-    element("fdaButton").addEventListener(
-      "click",
-      searchFDA
-    );
-
-    element("beforePain").addEventListener("input", event => {
-      element("beforePainText").textContent =
-        `${event.target.value} / 10`;
-    });
-
-    element("afterPain").addEventListener("input", event => {
-      element("afterPainText").textContent =
-        `${event.target.value} / 10`;
-    });
-
-    element("addExerciseButton").addEventListener(
-      "click",
-      addCustomExercise
-    );
-
-    element("completeExerciseButton").addEventListener(
-      "click",
-      recordExercise
-    );
-
-    element("copyReportButton").addEventListener(
-      "click",
-      copyReport
-    );
-
-    element("refreshFamilyButton").addEventListener(
-      "click",
-      renderFamily
-    );
-
-    element("copyFamilyButton").addEventListener(
-      "click",
-      copyFamily
-    );
-
-    // 초기 화면에 기존 입력값 표시
-    element("existingMeds").value =
-      state.medications.existing;
-
-    element("newMeds").value =
-      state.medications.new;
-
-    element("ocrText").value =
-      state.medications.ocrText;
-
-    // 첫 화면 표시
-    renderHome();
-    renderRehab();
+  if (name === "report") {
     renderReport();
-    renderFamily();
+  }
 
-    // 영상은 보상 버튼을 눌렀을 때 검색합니다.
-  </script>
+  if (name === "family") {
+    renderFamily();
+  }
+
+  if (name === "rehab") {
+    renderExercises();
+  }
+
+  window.scrollTo(0, 0);
+}
+
+/* ==================== 홈 ==================== */
+
+function renderHome() {
+  const day = currentDay();
+  const entry = getEntry(day);
+
+  $("demoMode").classList.toggle(
+    "active",
+    state.mode === "demo"
+  );
+
+  $("realMode").classList.toggle(
+    "active",
+    state.mode === "real"
+  );
+
+  $("demoControls").hidden = state.mode !== "demo";
+
+  $("dayText").textContent =
+    state.mode === "demo"
+      ? "🎬 발표 시연 모드 · " + day + "일차"
+      : "📅 실제 날짜 모드 · " + day + "일차";
+
+  $("modeText").textContent =
+    state.mode === "demo"
+      ? "발표용 가상 날짜를 사용하는 시연 기능입니다."
+      : "달력 날짜에 따라 하루씩 기록하는 기능입니다.";
+
+  const completed = Boolean(entry && entry.med);
+
+  $("medStatus").textContent = completed
+    ? "✅ 오늘의 복약 완료가 기록되었습니다."
+    : "⏳ 오늘의 복약 기록이 없습니다.";
+
+  $("medComplete").disabled =
+    completed || day < 1 || day > 30;
+
+  $("medComplete").textContent = completed
+    ? "✅ 기록 완료"
+    : "✅ 오늘 약 복용 완료";
+
+  $("pain").value =
+    entry && entry.pain !== null &&
+    entry.pain !== undefined
+      ? entry.pain
+      : 0;
+
+  $("painNumber").textContent = $("pain").value + " / 10";
+
+  document.querySelectorAll('[name="symptom"]').forEach(input => {
+    input.checked = Boolean(
+      entry &&
+      Array.isArray(entry.symptoms) &&
+      entry.symptoms.includes(input.value)
+    );
+  });
+
+  $("saveHealth").disabled = day < 1 || day > 30;
+
+  const firstThreeComplete = [1, 2, 3].every(n => {
+    const saved = state.demo.entries[n];
+    return Boolean(saved && saved.med);
+  });
+
+  $("nextDay").hidden =
+    state.mode !== "demo" ||
+    day >= 3 ||
+    !completed;
+
+  $("skipDay").hidden =
+    state.mode !== "demo" ||
+    day !== 3 ||
+    !firstThreeComplete;
+
+  $("demoHelp").textContent =
+    day === 30
+      ? "30일차 복약 완료를 누르면 축하 영상이 나타납니다."
+      : "1·2·3일차를 차례대로 기록한 뒤 " +
+        "30일차로 빠르게 이동할 수 있습니다.";
+
+  renderGrapes();
+}
+
+function renderGrapes() {
+  const group = $("grapeCells");
+  const SVG_NS = "http://www.w3.org/2000/svg";
+  const rows = [4, 5, 6, 5, 4, 3, 2, 1];
+
+  group.replaceChildren();
+
+  let number = 1;
+
+  rows.forEach((count, row) => {
+    const startX = 195 - (count - 1) * 27;
+
+    for (let column = 0; column < count; column++) {
+      const x = startX + column * 54;
+      const y = 135 + row * 52;
+
+      const entry = getEntry(number);
+      const filled = Boolean(entry && entry.med);
+
+      const circle = document.createElementNS(
+        SVG_NS, "circle"
+      );
+
+      circle.setAttribute("cx", x);
+      circle.setAttribute("cy", y);
+      circle.setAttribute("r", 25.5);
+      circle.setAttribute("stroke", "#8e40bf");
+      circle.setAttribute("stroke-width", 6);
+      circle.setAttribute(
+        "fill",
+        filled ? "url(#grapeFill)" : "#fff"
+      );
+
+      const text = document.createElementNS(
+        SVG_NS, "text"
+      );
+
+      text.setAttribute("x", x);
+      text.setAttribute("y", y + 6);
+      text.setAttribute("text-anchor", "middle");
+      text.setAttribute("font-size", "18");
+      text.setAttribute("font-weight", "900");
+      text.setAttribute(
+        "fill",
+        filled ? "#fff" : "#8e40bf"
+      );
+
+      text.textContent = number;
+
+      group.append(circle, text);
+      number++;
+    }
+  });
+
+  const count = completedCount();
+
+  $("grapeCount").textContent = count + " / 30일";
+
+  $("grapeHelp").textContent =
+    state.mode === "demo" && state.demo.advanced
+      ? "발표 시연: 4~29일차는 가상으로 생성한 기록입니다."
+      : "매일 복약 완료를 기록하면 포도알이 채워집니다.";
+
+  // 30일을 완주하기 전에는 보상 영상 버튼 숨기기
+  $("rewardButton").hidden = count !== 30;
+}
+
+function recordMedicine() {
+  const day = currentDay();
+  const entry = getEntry(day, true);
+
+  if (!entry || entry.med) {
+    return;
+  }
+
+  entry.med = true;
+
+  saveState();
+  renderHome();
+  renderReport();
+
+  if (completedCount() === 30) {
+    playReward();
+  }
+}
+
+function moveNextDay() {
+  if (state.mode !== "demo") {
+    return;
+  }
+
+  const day = state.demo.day;
+  const entry = getEntry(day);
+
+  if (day >= 3 || !entry || !entry.med) {
+    showMessage(
+      "복약 기록을 확인해 주세요",
+      "현재 날짜의 복약 완료를 먼저 기록해야 합니다."
+    );
+    return;
+  }
+
+  state.demo.day++;
+
+  saveState();
+  renderHome();
+}
+
+function skipToDay30() {
+  if (state.mode !== "demo" || state.demo.day !== 3) {
+    return;
+  }
+
+  const firstThreeComplete = [1, 2, 3].every(day => {
+    const entry = state.demo.entries[day];
+    return Boolean(entry && entry.med);
+  });
+
+  if (!firstThreeComplete) {
+    showMessage(
+      "시연 안내",
+      "1~3일차 복약 기록을 먼저 완료해 주세요."
+    );
+    return;
+  }
+
+  // 시연용 가상 기록임을 명시
+  for (let day = 4; day <= 29; day++) {
+    state.demo.entries[day] = {
+      med: true,
+      pain: null,
+      symptoms: [],
+      rehab: [],
+      simulated: true
+    };
+  }
+
+  state.demo.day = 30;
+  state.demo.advanced = true;
+
+  saveState();
+  renderHome();
+
+  showMessage(
+    "🎬 30일차로 이동했어요!",
+    "발표 시연을 위해 4~29일차 복약 기록을 " +
+    "가상으로 채웠습니다. " +
+    "30일차 복약 완료를 누르면 축하 영상을 볼 수 있습니다."
+  );
+}
+
+function resetDemo() {
+  if (!confirm(
+    "발표 시연 기록을 처음부터 시작할까요?"
+  )) {
+    return;
+  }
+
+  state.demo = {
+    day: 1,
+    entries: {},
+    advanced: false
+  };
+
+  saveState();
+  renderHome();
+  renderReport();
+}
+
+function saveDailyHealth() {
+  const entry = getEntry(currentDay(), true);
+
+  if (!entry) {
+    return;
+  }
+
+  const pain = Number($("pain").value);
+
+  const symptoms = Array.from(
+    document.querySelectorAll('[name="symptom"]:checked')
+  ).map(input => input.value);
+
+  entry.pain = pain;
+  entry.symptoms = symptoms;
+
+  saveState();
+
+  $("healthSaved").textContent =
+    "✅ 건강 상태를 저장했습니다.";
+
+  renderReport();
+
+  if (
+    symptoms.includes("가슴 통증") ||
+    symptoms.includes("호흡 곤란")
+  ) {
+    showMessage(
+      "⚠️ 건강 상태 주의",
+      "가슴 통증이나 호흡 곤란은 응급 상황일 수 있습니다. " +
+      "실제 증상이 있다면 119 등 응급 도움을 요청하세요. " +
+      "케어루프는 응급 신고를 대신하지 않습니다."
+    );
+  } else if (pain >= 7 || symptoms.length > 0) {
+    showMessage(
+      "⚠️ 건강 상태 확인",
+      "높은 통증이나 이상 증상이 기록되었습니다. " +
+      "증상이 계속되거나 심해지면 의료진과 상담하세요. " +
+      "이 안내는 진단이나 자동 예약이 아닙니다."
+    );
+  }
+}
+
+/* ==================== 축하 영상 ==================== */
+
+function chooseRewardIndex() {
+  if (REWARD_VIDEOS.length === 1) {
+    return 0;
+  }
+
+  let choices = REWARD_VIDEOS.map((_, i) => i);
+
+  choices = choices.filter(i => i !== lastRewardIndex);
+
+  if (choices.length === 0) {
+    choices = REWARD_VIDEOS.map((_, i) => i);
+  }
+
+  return choices[Math.floor(Math.random() * choices.length)];
+}
+
+function playReward() {
+  // 30알이 완성되기 전에는 재생하지 않음
+  if (completedCount() !== 30) {
+    return;
+  }
+
+  const index = chooseRewardIndex();
+  const item = REWARD_VIDEOS[index];
+
+  lastRewardIndex = index;
+
+  const video = $("rewardVideo");
+
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+
+  $("rewardName").textContent = item.title;
+  $("rewardStatus").textContent =
+    "재생 버튼을 누르면 축하 영상을 볼 수 있습니다.";
+
+  video.src = item.src;
+  video.load();
+
+  $("rewardOverlay").classList.add("open");
+
+  video.play().catch(() => {
+    // 자동 재생이 막혀도 ▶ 버튼으로 재생 가능
+  });
+}
+
+function closeRewardVideo() {
+  const video = $("rewardVideo");
+
+  video.pause();
+  video.removeAttribute("src");
+  video.load();
+
+  $("rewardOverlay").classList.remove("open");
+}
+
+/* ==================== 약 확인 ==================== */
+
+function containsDrug(text, names) {
+  const value = String(text).toLowerCase();
+
+  return names.some(name =>
+    value.includes(name.toLowerCase())
+  );
+}
+
+function analyzeDrugs() {
+  const oldText = $("oldMeds").value.trim();
+  const newText = $("newMeds").value.trim();
+
+  state.medications.existing = oldText;
+  state.medications.new = newText;
+  saveState();
+
+  if (!oldText || !newText) {
+    $("drugOutput").textContent =
+      "기존 약과 새로 받은 약을 모두 입력해 주세요.";
+    return;
+  }
+
+  const matches = DRUG_PAIRS.filter(pair => {
+    return (
+      containsDrug(oldText, pair.a) &&
+      containsDrug(newText, pair.b)
+    ) || (
+      containsDrug(oldText, pair.b) &&
+      containsDrug(newText, pair.a)
+    );
+  });
+
+  if (matches.length === 0) {
+    $("drugOutput").textContent =
+      "등록된 5개 예시 조합 중 일치하는 항목이 없습니다.\n\n" +
+      "⚠️ 이것은 함께 복용해도 안전하다는 의미가 아닙니다. " +
+      "현재 서비스가 확인하지 못하는 상호작용이 있을 수 있습니다. " +
+      "반드시 의사 또는 약사에게 확인하세요.";
+    return;
+  }
+
+  let result = "⚠️ 주의가 필요한 예시 약물 조합\n\n";
+
+  matches.forEach((pair, i) => {
+    result +=
+      (i + 1) + ". " +
+      pair.a[0] + " + " + pair.b[0] + "\n" +
+      pair.reason + "\n\n";
+  });
+
+  result +=
+    "※ 실제 진단이나 처방 판단 기능이 아닙니다. " +
+    "약을 임의로 중단하거나 변경하지 마세요.";
+
+  $("drugOutput").textContent = result;
+}
+
+function loadDrugExample() {
+  $("oldMeds").value = "와파린";
+  $("newMeds").value = "이부프로펜";
+  analyzeDrugs();
+}
+
+function downloadSamplePhoto() {
+  const canvas = document.createElement("canvas");
+
+  canvas.width = 800;
+  canvas.height = 1100;
+
+  const ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "#ece7df";
+  ctx.fillRect(0, 0, 800, 1100);
+
+  ctx.fillStyle = "#fffefa";
+  ctx.fillRect(70, 65, 660, 970);
+
+  ctx.fillStyle = "#3477a3";
+  ctx.fillRect(70, 65, 660, 130);
+
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#fff";
+  ctx.font = "bold 42px sans-serif";
+  ctx.fillText("시연용 약봉투", 400, 145);
+
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#333";
+
+  ctx.font = "bold 30px sans-serif";
+  ctx.fillText("가상 환자: 김케어", 125, 290);
+
+  ctx.font = "27px sans-serif";
+  ctx.fillText("용도: OCR 기능 시연", 125, 350);
+
+  ctx.font = "bold 40px sans-serif";
+  ctx.fillText("약품명: 이부프로펜", 125, 480);
+
+  ctx.font = "26px sans-serif";
+  ctx.fillText("실제 처방전이 아닙니다.", 125, 650);
+  ctx.fillText("가상 약품 정보입니다.", 125, 710);
+
+  ctx.fillStyle = "#a83f53";
+  ctx.font = "bold 28px sans-serif";
+  ctx.fillText("실제 복약에 사용하지 마세요", 125, 870);
+
+  const a = document.createElement("a");
+
+  a.href = canvas.toDataURL("image/png");
+  a.download = "careloop-demo-medicine.png";
+  a.click();
+}
+
+function ensureTesseract() {
+  return new Promise((resolve, reject) => {
+    if (
+      window.Tesseract &&
+      typeof window.Tesseract.recognize === "function"
+    ) {
+      resolve();
+      return;
+    }
+
+    const existing = document.querySelector(
+      'script[data-tesseract="careloop"]'
+    );
+
+    if (existing) {
+      existing.addEventListener("load", resolve, { once: true });
+      existing.addEventListener("error", reject, { once: true });
+      return;
+    }
+
+    const script = document.createElement("script");
+
+    script.dataset.tesseract = "careloop";
+    script.src =
+      "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
+
+    script.onload = resolve;
+    script.onerror = reject;
+
+    document.head.appendChild(script);
+  });
+}
+
+async function runOCR() {
+  const file = $("drugPhoto").files[0];
+
+  if (!file) {
+    showMessage(
+      "약봉투 사진을 선택해 주세요",
+      "먼저 사진을 첨부해야 합니다."
+    );
+    return;
+  }
+
+  $("readPhoto").disabled = true;
+
+  $("ocrStatus").textContent =
+    "사진 속 글자를 인식하고 있습니다. 인터넷 연결이 필요합니다.";
+
+  try {
+    await ensureTesseract();
+
+    const result = await window.Tesseract.recognize(
+      file, "kor+eng"
+    );
+
+    const text = String(result.data.text || "").trim();
+
+    $("ocrResult").value = text;
+    state.medications.ocrText = text;
+    saveState();
+
+    $("ocrStatus").textContent =
+      text
+        ? "✅ 인식 완료! 약 이름을 확인하고 수정해 주세요."
+        : "글자를 인식하지 못했습니다. 직접 입력해 주세요.";
+  } catch (error) {
+    $("ocrStatus").textContent =
+      "사진 인식에 실패했습니다. " +
+      "인터넷 연결을 확인하거나 직접 입력해 주세요.";
+  } finally {
+    $("readPhoto").disabled = false;
+  }
+}
+
+function applyOcrToNewMedicine() {
+  const text = $("ocrResult").value.trim();
+
+  if (!text) {
+    showMessage(
+      "인식 결과가 없습니다",
+      "사진을 인식하거나 약 이름을 직접 입력해 주세요."
+    );
+    return;
+  }
+
+  $("newMeds").value = text;
+
+  state.medications.new = text;
+  state.medications.ocrText = text;
+
+  saveState();
+
+  showMessage(
+    "약 확인",
+    "인식한 글자를 새 약 입력란으로 가져왔습니다. " +
+    "약 이름이 정확한지 직접 확인한 다음 " +
+    "상호작용 확인 버튼을 눌러 주세요."
+  );
+}
+
+async function searchFDA() {
+  const name = $("fdaName").value.trim();
+
+  if (!name) {
+    $("fdaOutput").textContent =
+      "검색할 약 이름을 입력해 주세요.";
+    return;
+  }
+
+  $("naverLink").href =
+    "https://search.naver.com/search.naver?query=" +
+    encodeURIComponent(name + " 의약품 정보");
+
+  $("searchFda").disabled = true;
+
+  $("fdaOutput").textContent =
+    "FDA 공개 정보를 검색하고 있습니다.";
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const safeName = name.replace(/["\\]/g, "");
+
+    const query =
+      "openfda.generic_name:\"" + safeName + "\"" +
+      "+openfda.brand_name:\"" + safeName + "\"";
+
+    const url =
+      "https://api.fda.gov/drug/label.json?search=" +
+      encodeURIComponent(query) +
+      "&limit=1";
+
+    const response = await fetch(url, {
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error("검색 결과 없음");
+    }
+
+    const data = await response.json();
+    const result = data.results && data.results[0];
+
+    if (!result) {
+      throw new Error("검색 결과 없음");
+    }
+
+    const warnings =
+      Array.isArray(result.warnings)
+        ? result.warnings.join(" ")
+        : "";
+
+    const cautions =
+      Array.isArray(result.contraindications)
+        ? result.contraindications.join(" ")
+        : "";
+
+    $("fdaOutput").textContent =
+      "검색어: " + name + "\n\n" +
+      "미국 FDA 공개 허가사항 일부:\n" +
+      (warnings || cautions || "표시할 정보가 없습니다.")
+        .slice(0, 1200) +
+      "\n\n※ 영어 원문 참고 자료이며, " +
+      "실제 복용 가능 여부를 판정하지 않습니다.";
+  } catch (error) {
+    $("fdaOutput").textContent =
+      "해당 정보를 찾지 못했거나 조회에 실패했습니다.\n\n" +
+      "검색 결과가 없다는 것은 약이 안전하다는 뜻이 아닙니다.";
+  } finally {
+    clearTimeout(timeout);
+    $("searchFda").disabled = false;
+  }
+}
+
+/* ==================== 재활 ==================== */
+
+function allExercises() {
+  return EXERCISES.concat(state.customExercises);
+}
+
+function currentExercise() {
+  return allExercises().find(
+    item => item.id === chosenExercise
+  ) || EXERCISES[0];
+}
+
+function renderExercises() {
+  const list = $("exerciseList");
+
+  list.replaceChildren();
+
+  allExercises().forEach(exercise => {
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "exercise-btn";
+
+    if (exercise.id === chosenExercise) {
+      button.classList.add("active");
+    }
+
+    button.textContent = exercise.name;
+
+    button.addEventListener("click", () => {
+      chosenExercise = exercise.id;
+      renderExercises();
+    });
+
+    list.appendChild(button);
+  });
+
+  const selected = currentExercise();
+
+  $("exerciseTitle").textContent = selected.name;
+
+  $("exerciseSteps").replaceChildren();
+
+  selected.steps.forEach(step => {
+    const li = document.createElement("li");
+    li.textContent = step;
+    $("exerciseSteps").appendChild(li);
+  });
+
+  $("beforeText").textContent = $("beforePain").value + " / 10";
+  $("afterText").textContent = $("afterPain").value + " / 10";
+
+  $("finishExercise").disabled =
+    currentDay() < 1 || currentDay() > 30;
+}
+
+function addMyExercise() {
+  const name = $("customExercise").value.trim();
+
+  if (!name) {
+    showMessage("운동 이름", "추가할 운동 이름을 입력해 주세요.");
+    return;
+  }
+
+  const exercise = {
+    id: "custom-" + Date.now(),
+    name: "📝 " + name,
+    steps: [
+      "담당 의료진이 허용한 운동인지 확인합니다.",
+      "의료진이 알려준 정확한 방법을 따릅니다.",
+      "무리하지 않고 편안한 범위에서 실시합니다."
+    ]
+  };
+
+  state.customExercises.push(exercise);
+  chosenExercise = exercise.id;
+
+  $("customExercise").value = "";
+
+  saveState();
+  renderExercises();
+}
+
+function completeExercise() {
+  const entry = getEntry(currentDay(), true);
+
+  if (!entry) {
+    return;
+  }
+
+  if (!Array.isArray(entry.rehab)) {
+    entry.rehab = [];
+  }
+
+  const selected = currentExercise();
+  const before = Number($("beforePain").value);
+  const after = Number($("afterPain").value);
+
+  entry.rehab.push({
+    id: selected.id,
+    name: selected.name,
+    before,
+    after,
+    time: new Date().toISOString()
+  });
+
+  saveState();
+
+  $("exerciseSaved").textContent =
+    "✅ 오늘의 운동 완료 기록을 저장했습니다.";
+
+  renderReport();
+
+  if (after >= 7 || after > before + 2) {
+    showMessage(
+      "⚠️ 운동 후 통증 안내",
+      "운동 후 통증이 높거나 크게 증가했습니다. " +
+      "무리하지 말고 담당 의료진과 상담하세요."
+    );
+  }
+}
+
+/* ==================== 리포트 ==================== */
+
+function reportRows() {
+  const end = Math.min(30, Math.max(1, currentDay()));
+  const start = Math.max(1, end - 6);
+
+  const rows = [];
+
+  for (let day = start; day <= end; day++) {
+    rows.push({
+      day,
+      entry: getEntry(day) || blankEntry()
+    });
+  }
+
+  return rows;
+}
+
+function reportData() {
+  const rows = reportRows();
+  const total = Math.max(1, rows.length);
+
+  const meds = rows.filter(row => row.entry.med).length;
+
+  const rehab = rows.filter(row =>
+    Array.isArray(row.entry.rehab) &&
+    row.entry.rehab.length > 0
+  ).length;
+
+  const pains = rows
+    .map(row => row.entry.pain)
+    .filter(pain =>
+      pain !== null &&
+      pain !== undefined &&
+      Number.isFinite(Number(pain))
+    )
+    .map(Number);
+
+  const average = pains.length
+    ? pains.reduce((a, b) => a + b, 0) / pains.length
+    : null;
+
+  const warnings = rows.filter(row => {
+    const pain =
+      row.entry.pain === null ||
+      row.entry.pain === undefined
+        ? null
+        : Number(row.entry.pain);
+
+    const symptoms =
+      Array.isArray(row.entry.symptoms)
+        ? row.entry.symptoms
+        : [];
+
+    return (pain !== null && pain >= 7) ||
+           symptoms.length > 0;
+  }).length;
+
+  const simulated = rows.filter(
+    row => row.entry.simulated
+  ).length;
+
+  return {
+    rows,
+    medRate: Math.round(meds / total * 100),
+    rehabRate: Math.round(rehab / total * 100),
+    average,
+    warnings,
+    simulated
+  };
+}
+
+function renderReport() {
+  const data = reportData();
+
+  $("reportMode").textContent =
+    state.mode === "demo"
+      ? "🎬 발표 시연 데이터 · 최근 최대 7일"
+      : "📅 실제 날짜 기록 · 최근 최대 7일";
+
+  $("medRate").textContent = data.medRate + "%";
+  $("rehabRate").textContent = data.rehabRate + "%";
+
+  $("painAverage").textContent =
+    data.average === null
+      ? "-"
+      : data.average.toFixed(1);
+
+  $("warningCount").textContent = data.warnings + "일";
+
+  $("reportChart").replaceChildren();
+
+  data.rows.forEach(row => {
+    const col = document.createElement("div");
+    col.className = "chart-col";
+
+    const bar = document.createElement("div");
+    bar.className =
+      "chart-bar" + (row.entry.med ? " done" : "");
+
+    bar.style.height = row.entry.med ? "80%" : "6%";
+
+    const label = document.createElement("div");
+    label.className = "chart-label";
+    label.textContent = row.day + "일";
+
+    col.append(bar, label);
+    $("reportChart").appendChild(col);
+  });
+
+  $("reportNote").textContent =
+    data.simulated > 0
+      ? "※ 이 구간에는 발표용 가상 복약 기록 " +
+        data.simulated + "일이 포함되어 있습니다."
+      : "※ 직접 입력한 기록을 요약한 참고 자료입니다. " +
+        "의료적 진단이 아닙니다.";
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (error) {
+    const textarea = document.createElement("textarea");
+
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    const success = document.execCommand("copy");
+    textarea.remove();
+
+    return success;
+  }
+}
+
+async function copyMyReport() {
+  const data = reportData();
+
+  const text = [
+    "🍇 케어루프 건강 기록 리포트",
+    state.mode === "demo"
+      ? "[발표 시연용]"
+      : "[직접 입력한 기록]",
+    "",
+    "복약 기록 비율: " + data.medRate + "%",
+    "재활 기록 비율: " + data.rehabRate + "%",
+    "평균 통증: " +
+      (data.average === null ? "-" : data.average.toFixed(1)),
+    "주의 기록: " + data.warnings + "일",
+    "가상 기록: " + data.simulated + "일",
+    "",
+    "※ 진단이나 처방을 대신하지 않습니다."
+  ].join("\n");
+
+  const success = await copyText(text);
+
+  $("reportCopied").textContent = success
+    ? "✅ 리포트를 복사했습니다."
+    : "복사하지 못했습니다.";
+}
+
+/* ==================== 보호자 ==================== */
+
+function familyText() {
+  const day = currentDay();
+  const entry = getEntry(day);
+
+  const med = entry && entry.med
+    ? "✅ 복약 완료 기록"
+    : "⏳ 복약 완료 기록 없음";
+
+  const pain = entry && entry.pain !== null &&
+    entry.pain !== undefined
+      ? "🌡️ 통증 점수: " + entry.pain + "/10"
+      : "🌡️ 통증 기록 없음";
+
+  const rehabCount =
+    entry && Array.isArray(entry.rehab)
+      ? entry.rehab.length
+      : 0;
+
+  const rehab = rehabCount
+    ? "🏃 재활 운동 " + rehabCount + "개 기록"
+    : "🏃 재활 기록 없음";
+
+  const warning = entry &&
+    (
+      (entry.pain !== null &&
+       entry.pain !== undefined &&
+       Number(entry.pain) >= 7) ||
+      (Array.isArray(entry.symptoms) &&
+       entry.symptoms.length > 0)
+    )
+      ? "\n⚠️ 주의할 건강 상태가 기록되었습니다."
+      : "";
+
+  return [
+    "🍇 케어루프 건강 알림",
+    "",
+    state.mode === "demo"
+      ? "발표 시연 " + day + "일차"
+      : "실제 날짜 " + day + "일차",
+    med,
+    pain,
+    rehab,
+    warning,
+    "",
+    "※ 실제 전송되지 않는 시뮬레이션입니다."
+  ].join("\n");
+}
+
+function renderFamily() {
+  $("familyMessage").textContent = familyText();
+}
+
+async function copyFamilyText() {
+  const success = await copyText(familyText());
+
+  $("familyCopied").textContent = success
+    ? "✅ 알림 문구를 복사했습니다."
+    : "복사하지 못했습니다.";
+}
+
+/* ==================== 버튼 연결 ==================== */
+
+document.querySelectorAll(".nav-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    openTab(button.dataset.page);
+  });
+});
+
+$("demoMode").addEventListener("click", () => {
+  state.mode = "demo";
+  saveState();
+  renderHome();
+});
+
+$("realMode").addEventListener("click", () => {
+  state.mode = "real";
+  saveState();
+  renderHome();
+});
+
+$("medComplete").addEventListener("click", recordMedicine);
+$("nextDay").addEventListener("click", moveNextDay);
+$("skipDay").addEventListener("click", skipToDay30);
+$("resetDemo").addEventListener("click", resetDemo);
+
+$("pain").addEventListener("input", () => {
+  $("painNumber").textContent = $("pain").value + " / 10";
+});
+
+$("saveHealth").addEventListener("click", saveDailyHealth);
+
+$("closeAlert").addEventListener("click", closeMessage);
+
+$("rewardButton").addEventListener("click", playReward);
+$("anotherReward").addEventListener("click", playReward);
+$("closeReward").addEventListener("click", closeRewardVideo);
+
+$("rewardVideo").addEventListener("error", () => {
+  $("rewardStatus").textContent =
+    "영상 재생에 실패했습니다. " +
+    "GitHub에 업로드한 파일 이름과 확장자를 확인해 주세요.";
+});
+
+$("checkDrugs").addEventListener("click", analyzeDrugs);
+$("drugExample").addEventListener("click", loadDrugExample);
+
+$("oldMeds").addEventListener("input", () => {
+  state.medications.existing = $("oldMeds").value;
+  saveState();
+});
+
+$("newMeds").addEventListener("input", () => {
+  state.medications.new = $("newMeds").value;
+  saveState();
+});
+
+$("drugPhoto").addEventListener("change", event => {
+  const file = event.target.files[0];
+  const preview = $("drugPreview");
+
+  if (!file) {
+    preview.style.display = "none";
+    preview.removeAttribute("src");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    preview.src = reader.result;
+    preview.style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+});
+
+$("readPhoto").addEventListener("click", runOCR);
+$("samplePhoto").addEventListener("click", downloadSamplePhoto);
+$("applyOcr").addEventListener("click", applyOcrToNewMedicine);
+
+$("ocrResult").addEventListener("input", () => {
+  state.medications.ocrText = $("ocrResult").value;
+  saveState();
+});
+
+$("searchFda").addEventListener("click", searchFDA);
+
+$("addExercise").addEventListener("click", addMyExercise);
+
+$("beforePain").addEventListener("input", () => {
+  $("beforeText").textContent =
+    $("beforePain").value + " / 10";
+});
+
+$("afterPain").addEventListener("input", () => {
+  $("afterText").textContent =
+    $("afterPain").value + " / 10";
+});
+
+$("finishExercise").addEventListener("click", completeExercise);
+
+$("copyReport").addEventListener("click", copyMyReport);
+
+$("refreshFamily").addEventListener("click", renderFamily);
+$("copyFamily").addEventListener("click", copyFamilyText);
+
+/* ==================== 초기 실행 ==================== */
+
+$("oldMeds").value = state.medications.existing;
+$("newMeds").value = state.medications.new;
+$("ocrResult").value = state.medications.ocrText;
+
+renderHome();
+renderExercises();
+renderReport();
+renderFamily();
+</script>
+
 </body>
 </html>
