@@ -1,364 +1,1336 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>케어루프 - 스마트 환자 케어</title>
-    <style>
-        :root {
-            --primary: #4A90E2;
-            --primary-light: #EBF3FA;
-            --grape: #8A2BE2;
-            --bg: #F8F9FA;
-            --card: #FFFFFF;
-            --text: #212121;
-            --text-muted: #666666;
-            --danger: #D32F2F;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>케어루프 2.0 - 스마트 회복 케어</title>
 
-        body {
-            font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-        }
+<style>
+:root {
+  --primary: #4A90E2;
+  --primary-light: #EBF3FA;
+  --grape: #8A2BE2;
+  --bg: #F6F8FB;
+  --text: #20242B;
+  --muted: #606773;
+  --danger: #C62828;
+  --green: #24834D;
+}
 
-        .phone-container {
-            width: 100%;
-            max-width: 420px;
-            min-height: 100vh;
-            background-color: var(--card);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            position: relative;
-            padding-bottom: 40px;
-        }
+* { box-sizing: border-box; }
 
-        /* 앱 헤더 */
-        .app-header {
-            background: var(--primary);
-            color: white;
-            padding: 20px;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            text-align: center;
-        }
+body {
+  margin: 0;
+  background: #E9EDF2;
+  color: var(--text);
+  font-family: "Pretendard", "Apple SD Gothic Neo",
+               "Malgun Gothic", sans-serif;
+  display: flex;
+  justify-content: center;
+}
 
-        .app-header h1 {
-            margin: 0;
-            font-size: 22px;
-        }
+button, input, select {
+  font: inherit;
+}
 
-        .app-header p {
-            margin: 5px 0 0;
-            font-size: 13px;
-            opacity: 0.9;
-        }
+button {
+  cursor: pointer;
+}
 
-        /* 1. 알림 시스템 카드 */
-        .push-notification {
-            background-color: white;
-            margin: 15px 20px -10px;
-            padding: 14px 16px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border-left: 5px solid var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-            z-index: 10;
-        }
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #F0B429;
+  outline-offset: 3px;
+}
 
-        .push-icon { font-size: 24px; }
-        .push-title { font-size: 12px; font-weight: bold; color: var(--primary); margin-bottom: 2px; }
-        .push-text { font-size: 14px; font-weight: 600; color: var(--text); }
+.phone {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  background: var(--bg);
+  padding-bottom: 100px;
+  position: relative;
+}
 
-        /* 2. 30일 포도송이 스티커판 */
-        .quest-card {
-            background: white;
-            margin: 25px 20px 15px;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #E0E0E0;
-        }
+header {
+  background: var(--primary);
+  color: white;
+  padding: 25px 22px;
+  border-radius: 0 0 24px 24px;
+}
 
-        .quest-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+header h1 {
+  margin: 0;
+  font-size: 26px;
+}
 
-        .quest-title { font-size: 16px; font-weight: bold; }
-        .quest-count {
-            font-size: 14px;
-            color: var(--grape);
-            font-weight: bold;
-            background: #F3E5F5;
-            padding: 4px 10px;
-            border-radius: 12px;
-        }
+header p {
+  margin: 8px 0 0;
+  font-size: 15px;
+}
 
-        .grape-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
-            justify-items: center;
-        }
+main {
+  padding: 18px;
+}
 
-        .grape-item {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background-color: #E0E0E0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #757575;
-            font-weight: bold;
-        }
+.tab {
+  display: none;
+  animation: fadeIn .2s ease;
+}
 
-        .grape-item.done {
-            background: radial-gradient(circle at 30% 30%, #AB47BC, #6A1B9A);
-            color: white;
-            box-shadow: 0 2px 6px rgba(138, 43, 226, 0.4);
-        }
+.tab.active {
+  display: block;
+}
 
-        /* 3. 일일 상태 체크 입력창 */
-        .input-section { padding: 0 20px; }
-        .section-label { font-size: 15px; font-weight: bold; margin: 15px 0 10px; }
+@keyframes fadeIn {
+  from { opacity: .5; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-        .pain-slider-container {
-            background: white;
-            padding: 15px;
-            border-radius: 16px;
-            border: 1px solid #E0E0E0;
-        }
+.card {
+  background: white;
+  border: 1px solid #E4E8EF;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.035);
+}
 
-        .pain-value {
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
+h2 {
+  font-size: 21px;
+  margin: 0 0 14px;
+}
 
-        input[type="range"] { width: 100%; accent-color: var(--primary); }
+h3 {
+  font-size: 18px;
+  margin: 0 0 12px;
+}
 
-        .symptom-check {
-            background: white;
-            padding: 14px 16px;
-            border-radius: 16px;
-            border: 1px solid #E0E0E0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
+p {
+  line-height: 1.6;
+}
 
-        .btn-submit {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            padding: 16px;
-            border: none;
-            border-radius: 16px;
-            font-size: 17px;
-            font-weight: bold;
-            margin-top: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-        }
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
 
-        /* 모달 팝업 (의사 예약 & 이스터에그 보상) */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
+.notice {
+  background: var(--primary-light);
+  border-left: 5px solid var(--primary);
+}
 
-        .modal-content {
-            background: white;
-            width: 100%;
-            max-width: 340px;
-            border-radius: 24px;
-            padding: 24px;
-            text-align: center;
-        }
+.notice strong {
+  color: #205D9F;
+}
 
-        .modal-icon { font-size: 48px; margin-bottom: 10px; }
-        .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
-        .modal-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
+label {
+  display: block;
+  font-size: 17px;
+  font-weight: 650;
+  margin: 14px 0;
+}
 
-        .video-container {
-            position: relative;
-            padding-bottom: 177.78%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+}
 
-        .video-container iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%; border: 0;
-        }
+input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
 
-        .btn-modal {
-            background: var(--primary);
-            color: white;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--primary);
+  min-height: 35px;
+}
+
+select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #BFC7D2;
+  border-radius: 12px;
+  background: white;
+  font-size: 16px;
+}
+
+.pain-value {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 12px 0;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--primary);
+  color: white;
+  font-size: 18px;
+  font-weight: 750;
+  margin-top: 14px;
+}
+
+.btn:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.btn.secondary {
+  background: #EAF1FB;
+  color: #205D9F;
+}
+
+.btn.purple {
+  background: var(--grape);
+}
+
+.btn.danger {
+  background: var(--danger);
+}
+
+.grape-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.grape-count {
+  background: #F3E5F5;
+  color: #7022B0;
+  padding: 7px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.grape-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.grape {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #E7E7E7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.grape.done {
+  background: radial-gradient(circle at 30% 30%,
+    #AB47BC, #6A1B9A);
+  color: white;
+  box-shadow: 0 2px 5px #8A2BE244;
+  font-size: 19px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat {
+  background: #F3F7FC;
+  border-radius: 15px;
+  padding: 16px 10px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  color: #205D9F;
+  font-size: 25px;
+  margin-bottom: 5px;
+}
+
+.stat span {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 5px;
+  height: 170px;
+  padding-top: 10px;
+  border-bottom: 1px solid #CCD4DF;
+}
+
+.chart-col {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+}
+
+.chart-bar {
+  width: 75%;
+  max-width: 35px;
+  background: var(--primary);
+  border-radius: 7px 7px 0 0;
+  min-height: 0;
+}
+
+.chart-label {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.report-row {
+  border-bottom: 1px solid #E8ECF2;
+  padding: 12px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.report-row:last-child {
+  border-bottom: 0;
+}
+
+.message {
+  background: #FEE500;
+  color: #262626;
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 12px;
+}
+
+.message .bubble {
+  background: white;
+  border-radius: 14px;
+  padding: 15px;
+  margin-top: 10px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.warning-box {
+  background: #FFF0F0;
+  border: 1px solid #F1B6B6;
+  border-radius: 14px;
+  padding: 15px;
+  color: #8D2020;
+  line-height: 1.6;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 430px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: white;
+  border-top: 1px solid #DEE3EA;
+  z-index: 50;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-btn {
+  background: white;
+  border: 0;
+  padding: 13px 3px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.nav-btn.active {
+  color: #205D9F;
+  font-weight: bold;
+  background: #EFF6FF;
+}
+
+.nav-btn span {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal {
+  background: white;
+  width: 100%;
+  max-width: 370px;
+  max-height: 88dvh;
+  overflow-y: auto;
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+}
+
+.modal h2 {
+  margin-top: 5px;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 177.78%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.video-container iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.demo-tag {
+  display: inline-block;
+  background: #FFF2CC;
+  color: #715000;
+  padding: 5px 9px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.small-note {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab { animation: none; }
+}
+</style>
 </head>
+
 <body>
+<div class="phone">
 
-<div class="phone-container">
-    <div class="app-header">
-        <h1>케어루프 (CareLoop)</h1>
-        <p>퇴원 후 맞춤 복약 & 재활 관리 시스템</p>
+<header>
+  <h1>🍇 케어루프 2.0</h1>
+  <p>매일 조금씩, 건강한 회복 습관</p>
+</header>
+
+<main>
+
+<!-- 홈 -->
+<section id="home" class="tab active">
+
+  <div class="card notice">
+    <strong>💊 오늘의 복약 알림</strong>
+    <p>약을 처방받은 시간에 복용하셨나요?<br>
+    복용 후 아래에서 기록해 주세요.</p>
+    <div class="small-note">
+      이 알림은 앱 내부 안내이며 실제 스마트폰 푸시 알림은 아닙니다.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="grape-header">
+      <h3>🍇 30일 연속 복약</h3>
+      <div class="grape-count">
+        <span id="grapeCount">0</span> / 30일
+      </div>
+    </div>
+    <div id="grapeGrid" class="grape-grid"></div>
+    <p class="small-note">
+      하루에 한 번 복약을 기록해요.
+      30일 연속 성공하면 특별한 선물이 열립니다!
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>🩺 오늘의 건강 체크</h2>
+
+    <label class="check-row">
+      <input type="checkbox" id="medCheck">
+      <span>오늘 처방받은 약을 복용했어요</span>
+    </label>
+
+    <label for="painSlider">오늘 느끼는 통증</label>
+    <div class="pain-value">
+      <span id="painNum">2</span> / 10점
+    </div>
+    <input type="range" id="painSlider"
+           min="0" max="10" value="2">
+    <p class="small-note">
+      0점: 통증 없음 / 10점: 상상할 수 있는 가장 심한 통증
+    </p>
+
+    <label class="check-row">
+      <input type="checkbox" id="warningCheck">
+      <span>수술 부위 진물, 발열 등 이상 징후가 있어요</span>
+    </label>
+
+    <button class="btn" id="saveHealthBtn">
+      🍇 오늘 건강 기록 저장
+    </button>
+
+    <p id="healthStatus" class="small-note"
+       aria-live="polite"></p>
+  </div>
+
+  <div class="card">
+    <h3>🎁 포도송이 체험</h3>
+    <p class="muted">
+      발표 및 시연을 위한 기능입니다.
+      실제 기록과 별도로 29일 완료 상태를 체험할 수 있어요.
+    </p>
+    <button class="btn secondary" id="demoBtn">
+      29일 완료 데모 시작
+    </button>
+    <button class="btn secondary" id="resetBtn">
+      데모 종료 / 기록 초기화
+    </button>
+  </div>
+
+</section>
+
+<!-- 재활 -->
+<section id="rehab" class="tab">
+
+  <div class="card">
+    <h2>🏃 오늘의 재활 퀘스트</h2>
+    <p class="muted">
+      의료진에게 허용받은 운동을 기록해 보세요.
+    </p>
+
+    <label for="exerciseType">운동 종류</label>
+    <select id="exerciseType">
+      <option value="">운동을 선택해 주세요</option>
+      <option value="걷기 운동">걷기 운동</option>
+      <option value="관절 가동 운동">관절 가동 운동</option>
+      <option value="가벼운 스트레칭">가벼운 스트레칭</option>
+      <option value="기타 처방 운동">기타 처방 운동</option>
+    </select>
+
+    <div class="warning-box" style="margin-top:15px">
+      ⚠️ 운동 종류와 강도는 의료진의 지시를 따라야 합니다.
+      운동 중 통증이 심해지거나 어지러움 등 이상이 발생하면
+      중단하고 의료진과 상담하세요.
     </div>
 
-    <!-- 1. 복약 시간 알림 -->
-    <div class="push-notification">
-        <div class="push-icon">💊</div>
-        <div class="push-content">
-            <div class="push-title">복약 알림</div>
-            <div class="push-text">알약 드실 시간입니다! 약을 복용 후 아래를 체크해 주세요.</div>
-        </div>
+    <label for="beforePain">운동 전 통증</label>
+    <div class="pain-value">
+      <span id="beforeNum">3</span>점
     </div>
+    <input type="range" id="beforePain"
+           min="0" max="10" value="3">
 
-    <!-- 2. 30일 포도송이 완성 스티커판 -->
-    <div class="quest-card">
-        <div class="quest-header">
-            <div class="quest-title">🍇 30일 연속 복약 포도송이</div>
-            <div class="quest-count"><span id="grapeCount">29</span> / 30일</div>
-        </div>
-        <div class="grape-grid" id="grapeGrid"></div>
+    <label class="check-row">
+      <input type="checkbox" id="exerciseDone">
+      <span>오늘 허용된 재활 운동을 완료했어요</span>
+    </label>
+
+    <label for="afterPain">운동 후 통증</label>
+    <div class="pain-value">
+      <span id="afterNum">3</span>점
     </div>
+    <input type="range" id="afterPain"
+           min="0" max="10" value="3">
 
-    <!-- 3. 수술부위 및 아픈점 체크 -->
-    <div class="input-section">
-        <div class="section-label">🩺 오늘 느끼는 통증 및 수술부위 체크</div>
-        <div class="pain-slider-container">
-            <div class="pain-value"><span id="painNum">2</span>점 <small style="font-size:12px; color:#666;">(0:없음 ~ 10:극심함)</small></div>
-            <input type="range" id="painSlider" min="0" max="10" value="2" oninput="updatePain(this.value)">
-        </div>
+    <button class="btn" id="saveRehabBtn">
+      🏃 재활 운동 기록 저장
+    </button>
 
-        <div class="symptom-check">
-            <label for="warningCheck" style="font-size:14px; font-weight:600; cursor:pointer;">
-                🚨 수술 부위에 진물이나 발열이 있나요?
-            </label>
-            <input type="checkbox" id="warningCheck" style="width:20px; height:20px; accent-color:var(--danger);">
-        </div>
+    <p id="rehabStatus" class="small-note"
+       aria-live="polite"></p>
+  </div>
 
-        <button class="btn-submit" onclick="submitDailyCheck()">오늘 상태 기록 제출 🍇</button>
+  <div class="card">
+    <h3>📋 오늘의 운동 기록</h3>
+    <div id="rehabSummary" class="muted">
+      아직 기록이 없습니다.
     </div>
+  </div>
+
+</section>
+
+<!-- 리포트 -->
+<section id="report" class="tab">
+
+  <div class="card">
+    <h2>📊 진료 리포트</h2>
+    <p class="muted">
+      다음 진료 시 의료진에게 보여줄 수 있는
+      건강 기록 요약입니다.
+    </p>
+    <span class="demo-tag">환자 직접 입력 데이터</span>
+  </div>
+
+  <div class="card">
+    <h3>최근 7일 요약</h3>
+    <div class="stat-grid">
+      <div class="stat">
+        <strong id="medRate">0%</strong>
+        <span>복약 기록률</span>
+      </div>
+      <div class="stat">
+        <strong id="rehabRate">0%</strong>
+        <span>재활 기록률</span>
+      </div>
+      <div class="stat">
+        <strong id="avgPain">-</strong>
+        <span>기록된 평균 통증</span>
+      </div>
+      <div class="stat">
+        <strong id="warningDays">0일</strong>
+        <span>이상 징후 기록일</span>
+      </div>
+    </div>
+    <p class="small-note">
+      기록률은 최근 7일 중 완료한 날짜 비율입니다.
+      실제 처방 복약 순응도나 의학적 회복률을 의미하지 않습니다.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>📈 최근 7일 통증 변화</h3>
+    <div id="painChart" class="chart"
+         role="img" aria-label="최근 7일 통증 점수 막대그래프">
+    </div>
+    <p class="small-note">
+      기록이 없는 날은 막대가 표시되지 않습니다.
+      그래프의 최대값은 10점입니다.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🗓 날짜별 기록</h3>
+    <div id="reportHistory"></div>
+    <button class="btn secondary" id="copyReportBtn">
+      📋 진료 리포트 복사하기
+    </button>
+  </div>
+
+</section>
+
+<!-- 보호자 -->
+<section id="family" class="tab">
+
+  <div class="card">
+    <h2>👨‍👩‍👧 보호자 안심 케어</h2>
+    <p>
+      어르신의 건강 기록을 보호자에게
+      공유하는 상황을 체험해 보세요.
+    </p>
+    <span class="demo-tag">카카오톡 화면 시뮬레이션</span>
+    <p class="small-note">
+      실제 카카오톡 메시지는 전송되지 않습니다.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>💬 보호자 알림 미리보기</h3>
+    <div class="message">
+      <strong>💬 CareLoop 알림</strong>
+      <div id="familyMessage" class="bubble">
+        아직 오늘의 건강 기록이 없습니다.
+      </div>
+    </div>
+    <button class="btn" id="previewFamilyBtn">
+      💛 최신 기록으로 알림 만들기
+    </button>
+  </div>
+
+</section>
+
+</main>
+
+<nav class="bottom-nav" aria-label="주 메뉴">
+  <button class="nav-btn active"
+          data-tab="home" aria-current="page">
+    <span>🏠</span>홈
+  </button>
+  <button class="nav-btn" data-tab="rehab">
+    <span>🏃</span>재활
+  </button>
+  <button class="nav-btn" data-tab="report">
+    <span>📊</span>리포트
+  </button>
+  <button class="nav-btn" data-tab="family">
+    <span>👨‍👩‍👧</span>보호자
+  </button>
+</nav>
+
 </div>
 
-<!-- AI 위험 감지 자동 의사 예약 팝업 -->
-<div class="modal-overlay" id="doctorModal">
-    <div class="modal-content">
-        <div class="modal-icon">🏥</div>
-        <div class="modal-title" style="color: var(--danger);">AI 위험 감지 및 자동 진료 예약</div>
-        <div class="modal-desc">
-            오늘 입력하신 통증 수치가 높거나 이상 징후가 감지되었습니다.<br><br>
-            환자님의 안전을 위해 <strong>담당 주치의 선생님 진료가 자동으로 예약</strong>되었습니다.
-        </div>
-        <button class="btn-modal" style="background: var(--danger);" onclick="closeModal('doctorModal')">예약 내역 확인하기</button>
+<!-- 위험 안내 모달 -->
+<div class="modal-overlay" id="doctorModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="doctorTitle">
+  <div class="modal">
+    <div style="font-size:48px">🏥</div>
+    <h2 id="doctorTitle" style="color:var(--danger)">
+      건강 이상 신호 안내
+    </h2>
+    <span class="demo-tag">규칙 기반 시뮬레이션</span>
+    <p>
+      입력하신 통증 점수가 높거나
+      이상 징후가 기록되었습니다.
+    </p>
+    <div class="warning-box">
+      담당 의료진 또는 의료기관에 연락해
+      적절한 진료가 필요한지 확인해 주세요.
+      심각하거나 급격히 악화되는 증상은
+      즉시 응급의료 도움을 받으세요.
     </div>
+    <p class="small-note">
+      이 앱은 실제 AI 진단이나 병원 예약을 수행하지 않습니다.
+      진료 예약은 완료되지 않았습니다.
+    </p>
+    <button class="btn danger" id="closeDoctorBtn">
+      확인했습니다
+    </button>
+  </div>
 </div>
 
-<!-- 30일 포도 완주 시 이스터에그 보상 팝업 (임영웅 쇼츠 영상) -->
-<div class="modal-overlay" id="rewardModal">
-    <div class="modal-content">
-        <div class="modal-title" style="color: var(--grape);">🎉 30일 포도송이 완주 축하!</div>
-        <div class="modal-desc" style="margin-bottom: 10px;">
-            30일 동안 약을 빠짐없이 잘 드셨습니다!<br>선물로 임영웅 님의 감성 무대 영상을 드립니다 🎵
-        </div>
-        <div class="video-container">
-            <iframe id="heroVideo" src="" title="임영웅 - 넌 감동이었어" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <button class="btn-modal" style="background: var(--grape);" onclick="closeRewardModal()">닫기</button>
+<!-- 30일 보상 모달 -->
+<div class="modal-overlay" id="rewardModal"
+     role="dialog" aria-modal="true"
+     aria-labelledby="rewardTitle">
+  <div class="modal">
+    <h2 id="rewardTitle" style="color:var(--grape)">
+      🎉 30일 포도송이 완주!
+    </h2>
+    <p>
+      30일 연속 복약 기록을 달성하셨어요!
+      특별한 축하 영상을 준비했습니다. 🎵
+    </p>
+    <div class="video-container">
+      <iframe id="heroVideo" src=""
+        title="임영웅 축하 영상"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen>
+      </iframe>
     </div>
+    <p class="small-note">
+      영상 재생은 YouTube 및 브라우저 설정에 따라
+      제한될 수 있습니다.
+    </p>
+    <button class="btn purple" id="closeRewardBtn">
+      선물 닫기
+    </button>
+  </div>
 </div>
 
 <script>
-    // 현재 29일 성공 상태로 세팅 (테스트를 위해 오늘 기록 시 30일 완성 되도록 설정)
-    let completedDays = 29;
+"use strict";
 
-    function renderGrapes() {
-        const grid = document.getElementById('grapeGrid');
-        grid.innerHTML = '';
-        for (let i = 1; i <= 30; i++) {
-            const grape = document.createElement('div');
-            grape.className = 'grape-item' + (i <= completedDays ? ' done' : '');
-            grape.innerText = i <= completedDays ? '🍇' : i;
-            grid.appendChild(grape);
-        }
-        document.getElementById('grapeCount').innerText = completedDays;
+const STORAGE_KEY = "careloop_v2_records";
+const DEMO_KEY = "careloop_v2_demo";
+const VIDEO_URL =
+  "https://www.youtube.com/embed/C1IT6reF8SU?autoplay=1";
+
+let records = loadRecords();
+let demoMode = localStorage.getItem(DEMO_KEY) === "true";
+let demoCompleted = false;
+
+function $(id) {
+  return document.getElementById(id);
+}
+
+function localDate(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function dateOffset(days) {
+  const d = new Date();
+  d.setHours(12, 0, 0, 0);
+  d.setDate(d.getDate() + days);
+  return localDate(d);
+}
+
+function loadRecords() {
+  try {
+    const value = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "{}"
+    );
+    return value && typeof value === "object" &&
+      !Array.isArray(value) ? value : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveRecords() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY, JSON.stringify(records)
+    );
+    return true;
+  } catch {
+    alert("저장 공간에 문제가 있어 기록을 저장하지 못했습니다.");
+    return false;
+  }
+}
+
+function getToday() {
+  return records[localDate()] || {};
+}
+
+function clampPain(value) {
+  return Math.max(0, Math.min(10, Number(value) || 0));
+}
+
+function showTab(id) {
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.classList.toggle("active", tab.id === id);
+  });
+
+  document.querySelectorAll(".nav-btn").forEach(btn => {
+    const active = btn.dataset.tab === id;
+    btn.classList.toggle("active", active);
+    if (active) btn.setAttribute("aria-current", "page");
+    else btn.removeAttribute("aria-current");
+  });
+
+  if (id === "report") renderReport();
+  if (id === "rehab") renderRehab();
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showModal(id) {
+  $(id).classList.add("open");
+  const button = $(id).querySelector("button");
+  if (button) button.focus();
+}
+
+function closeModal(id) {
+  $(id).classList.remove("open");
+}
+
+function updatePainDisplays() {
+  $("painNum").textContent = $("painSlider").value;
+  $("beforeNum").textContent = $("beforePain").value;
+  $("afterNum").textContent = $("afterPain").value;
+}
+
+function countStreak() {
+  if (demoMode) {
+    return demoCompleted ? 30 : 29;
+  }
+
+  let count = 0;
+  let offset = 0;
+
+  // 오늘 기록이 아직 없다면 어제부터 확인
+  if (!records[dateOffset(0)]?.medication) {
+    offset = -1;
+  }
+
+  while (count < 30) {
+    const date = dateOffset(offset);
+    if (!records[date]?.medication) break;
+    count++;
+    offset--;
+  }
+
+  return count;
+}
+
+function renderGrapes() {
+  const count = countStreak();
+  $("grapeCount").textContent = count;
+
+  const grid = $("grapeGrid");
+  grid.replaceChildren();
+
+  for (let i = 1; i <= 30; i++) {
+    const grape = document.createElement("div");
+    grape.className = "grape" + (i <= count ? " done" : "");
+    grape.textContent = i <= count ? "🍇" : i;
+    grape.setAttribute(
+      "aria-label",
+      `${i}일차 ${i <= count ? "완료" : "미완료"}`
+    );
+    grid.appendChild(grape);
+  }
+}
+
+function loadTodayInputs() {
+  const today = getToday();
+
+  $("medCheck").checked = !!today.medication;
+  $("painSlider").value = today.pain ?? 2;
+  $("warningCheck").checked = !!today.warning;
+
+  if (today.healthSaved) {
+    $("healthStatus").textContent =
+      "오늘의 건강 기록이 저장되어 있습니다. 수정할 수 있어요.";
+  }
+
+  $("exerciseType").value = today.exerciseType || "";
+  $("exerciseDone").checked = !!today.exerciseDone;
+  $("beforePain").value = today.beforePain ?? 3;
+  $("afterPain").value = today.afterPain ?? 3;
+
+  updatePainDisplays();
+}
+
+function submitDailyCheck() {
+  const todayKey = localDate();
+  const old = records[todayKey] || {};
+
+  const medication = $("medCheck").checked;
+  const pain = clampPain($("painSlider").value);
+  const warning = $("warningCheck").checked;
+
+  const next = {
+    ...old,
+    medication,
+    pain,
+    warning,
+    healthSaved: true
+  };
+
+  records[todayKey] = next;
+
+  if (!saveRecords()) {
+    if (Object.keys(old).length) records[todayKey] = old;
+    else delete records[todayKey];
+    return;
+  }
+
+  if (demoMode && medication) {
+    demoCompleted = true;
+  }
+
+  renderGrapes();
+
+  $("healthStatus").textContent =
+    "✅ 오늘의 건강 기록이 저장되었습니다.";
+
+  // 위험 신호는 보상 여부와 관계없이 항상 안내
+  if (warning || pain >= 7) {
+    showModal("doctorModal");
+    return;
+  }
+
+  // 데모에서는 29일에서 30일로 도달할 때만 보상
+  if (demoMode && demoCompleted && medication) {
+    if (!sessionStorage.getItem("careloop_demo_reward")) {
+      sessionStorage.setItem("careloop_demo_reward", "true");
+      showReward();
+    }
+    return;
+  }
+
+  // 실제 연속 기록이 처음 30일에 도달했을 때만 보상
+  if (!demoMode && medication && countStreak() === 30) {
+    if (!localStorage.getItem("careloop_real_reward")) {
+      localStorage.setItem("careloop_real_reward", "true");
+      showReward();
+    }
+  }
+}
+
+function showReward() {
+  $("heroVideo").src = VIDEO_URL;
+  showModal("rewardModal");
+}
+
+function closeReward() {
+  $("heroVideo").src = "";
+  closeModal("rewardModal");
+}
+
+function saveRehab() {
+  const type = $("exerciseType").value;
+  const done = $("exerciseDone").checked;
+
+  if (!type) {
+    alert("운동 종류를 먼저 선택해 주세요.");
+    return;
+  }
+
+  const before = clampPain($("beforePain").value);
+  const after = clampPain($("afterPain").value);
+
+  const key = localDate();
+  const old = records[key] || {};
+
+  records[key] = {
+    ...old,
+    exerciseType: type,
+    exerciseDone: done,
+    beforePain: before,
+    afterPain: after,
+    rehabSaved: true
+  };
+
+  if (!saveRecords()) {
+    if (Object.keys(old).length) records[key] = old;
+    else delete records[key];
+    return;
+  }
+
+  $("rehabStatus").textContent =
+    "✅ 오늘의 재활 운동 기록이 저장되었습니다.";
+
+  renderRehab();
+
+  if (done && after > before) {
+    alert(
+      "운동 후 통증이 증가했습니다. " +
+      "운동을 무리하게 지속하지 말고 " +
+      "의료진의 지침을 확인해 주세요."
+    );
+  }
+}
+
+function renderRehab() {
+  const r = getToday();
+  const target = $("rehabSummary");
+
+  if (!r.rehabSaved) {
+    target.textContent = "아직 오늘의 운동 기록이 없습니다.";
+    return;
+  }
+
+  target.replaceChildren();
+
+  const lines = [
+    `운동: ${r.exerciseType}`,
+    `수행 여부: ${r.exerciseDone ? "완료" : "미완료"}`,
+    `운동 전 통증: ${r.beforePain}점`,
+    `운동 후 통증: ${r.afterPain}점`,
+    `통증 변화: ${r.afterPain - r.beforePain > 0 ? "+" : ""}${r.afterPain - r.beforePain}점`
+  ];
+
+  lines.forEach(line => {
+    const p = document.createElement("p");
+    p.textContent = line;
+    target.appendChild(p);
+  });
+}
+
+function lastSevenDays() {
+  return Array.from({ length: 7 }, (_, i) =>
+    dateOffset(i - 6)
+  );
+}
+
+function percent(n, total) {
+  return Math.round(n / total * 100) + "%";
+}
+
+function renderReport() {
+  const days = lastSevenDays();
+  const data = days.map(day => ({
+    date: day,
+    record: records[day] || {}
+  }));
+
+  const medDays = data.filter(
+    x => x.record.medication === true
+  ).length;
+
+  const rehabDays = data.filter(
+    x => x.record.exerciseDone === true
+  ).length;
+
+  const pains = data
+    .filter(x => x.record.healthSaved)
+    .map(x => x.record.pain);
+
+  const warningCount = data.filter(
+    x => x.record.warning === true
+  ).length;
+
+  $("medRate").textContent = percent(medDays, 7);
+  $("rehabRate").textContent = percent(rehabDays, 7);
+  $("warningDays").textContent = warningCount + "일";
+
+  $("avgPain").textContent = pains.length
+    ? (pains.reduce((a,b) => a + b, 0) / pains.length)
+        .toFixed(1) + "점"
+    : "-";
+
+  const chart = $("painChart");
+  chart.replaceChildren();
+
+  data.forEach(({ date, record }) => {
+    const col = document.createElement("div");
+    col.className = "chart-col";
+
+    const bar = document.createElement("div");
+    bar.className = "chart-bar";
+
+    const hasPain = record.healthSaved;
+    const pain = hasPain ? clampPain(record.pain) : 0;
+
+    bar.style.height = hasPain
+      ? Math.max(3, pain * 12) + "px"
+      : "0px";
+
+    bar.title = hasPain
+      ? `${date}: ${pain}점`
+      : `${date}: 기록 없음`;
+
+    const label = document.createElement("span");
+    label.className = "chart-label";
+    label.textContent = date.slice(5);
+
+    col.appendChild(bar);
+    col.appendChild(label);
+    chart.appendChild(col);
+  });
+
+  const history = $("reportHistory");
+  history.replaceChildren();
+
+  [...data].reverse().forEach(({ date, record }) => {
+    const row = document.createElement("div");
+    row.className = "report-row";
+
+    const parts = [date];
+
+    if (record.healthSaved) {
+      parts.push(
+        `복약: ${record.medication ? "완료" : "미완료"}`,
+        `통증: ${record.pain}점`,
+        `이상 징후: ${record.warning ? "있음" : "없음"}`
+      );
     }
 
-    function updatePain(val) {
-        document.getElementById('painNum').innerText = val;
+    if (record.rehabSaved) {
+      parts.push(
+        `재활: ${record.exerciseType}`,
+        `수행: ${record.exerciseDone ? "완료" : "미완료"}`,
+        `운동 전후 통증: ${record.beforePain} → ${record.afterPain}`
+      );
     }
 
-    function submitDailyCheck() {
-        const pain = parseInt(document.getElementById('painSlider').value);
-        const warning = document.getElementById('warningCheck').checked;
-
-        // 환자 상태가 안 좋을 경우 -> 자동으로 의사 진료 예약 팝업
-        if (warning || pain >= 7) {
-            document.getElementById('doctorModal').style.display = 'flex';
-        } else {
-            // 통상 기록 완료 처리
-            if (completedDays < 30) {
-                completedDays++;
-                renderGrapes();
-            }
-
-            // 30일을 모두 채운 경우에만 이스터에그 보상 영상 출동
-            if (completedDays === 30) {
-                setTimeout(() => {
-                    const rewardModal = document.getElementById('rewardModal');
-                    const iframe = document.getElementById('heroVideo');
-                    iframe.src = "https://www.youtube.com/embed/C1IT6reF8SU?autoplay=1";
-                    rewardModal.style.display = 'flex';
-                }, 300);
-            } else {
-                alert("오늘의 복약 및 상태 기록이 완료되었습니다!");
-            }
-        }
+    if (!record.healthSaved && !record.rehabSaved) {
+      parts.push("기록 없음");
     }
 
-    function closeModal(id) {
-        document.getElementById(id).style.display = 'none';
+    row.textContent = parts.join(" | ");
+    history.appendChild(row);
+  });
+}
+
+function reportText() {
+  const days = lastSevenDays();
+  const rows = days.map(day => ({
+    date: day,
+    r: records[day] || {}
+  }));
+
+  const med = rows.filter(x => x.r.medication).length;
+  const rehab = rows.filter(x => x.r.exerciseDone).length;
+  const pains = rows.filter(x => x.r.healthSaved)
+    .map(x => x.r.pain);
+
+  const average = pains.length
+    ? (pains.reduce((a,b) => a+b, 0) / pains.length)
+        .toFixed(1)
+    : "기록 없음";
+
+  const lines = [
+    "[케어루프 진료 리포트]",
+    "기간: " + days[0] + " ~ " + days[6],
+    "최근 7일 복약 기록률: " + percent(med, 7),
+    "최근 7일 재활 기록률: " + percent(rehab, 7),
+    "기록된 평균 통증: " + average,
+    "",
+    "[날짜별 기록]"
+  ];
+
+  rows.forEach(({ date, r }) => {
+    lines.push(
+      `${date} | 복약: ${
+        r.healthSaved
+          ? (r.medication ? "완료" : "미완료")
+          : "미기록"
+      } | 통증: ${
+        r.healthSaved ? r.pain : "미기록"
+      } | 이상 징후: ${
+        r.healthSaved
+          ? (r.warning ? "있음" : "없음")
+          : "미기록"
+      } | 재활: ${
+        r.rehabSaved
+          ? (r.exerciseDone ? "완료" : "미완료")
+          : "미기록"
+      }`
+    );
+  });
+
+  lines.push(
+    "",
+    "※ 환자 직접 입력 기록이며 의료적 진단 결과가 아닙니다."
+  );
+
+  return lines.join("\n");
+}
+
+async function copyReport() {
+  const text = reportText();
+
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("진료 리포트가 복사되었습니다.");
+  } catch {
+    window.prompt(
+      "아래 내용을 전체 선택하여 복사해 주세요.",
+      text
+    );
+  }
+}
+
+function previewFamily() {
+  const r = getToday();
+
+  let msg = "🍇 케어루프 건강 소식\n\n";
+
+  if (!r.healthSaved && !r.rehabSaved) {
+    msg += "아직 오늘의 건강 기록이 없습니다.";
+  } else {
+    if (r.healthSaved) {
+      msg +=
+        `💊 복약: ${r.medication ? "완료" : "미완료"}\n` +
+        `🩺 통증: ${r.pain}/10점\n`;
     }
 
-    function closeRewardModal() {
-        const iframe = document.getElementById('heroVideo');
-        iframe.src = ""; // 영상 종료
-        document.getElementById('rewardModal').style.display = 'none';
+    if (r.rehabSaved) {
+      msg +=
+        `🏃 재활: ${r.exerciseType}\n` +
+        `운동 수행: ${r.exerciseDone ? "완료" : "미완료"}\n`;
     }
 
-    renderGrapes();
+    if (r.warning || (r.healthSaved && r.pain >= 7)) {
+      msg +=
+        "\n🚨 건강 이상 신호가 기록되었습니다." +
+        "\n어르신의 상태를 확인하고 의료진과 상담해 주세요.";
+    } else {
+      msg += "\n💜 오늘의 건강 기록이 업데이트되었습니다.";
+    }
+  }
+
+  msg += "\n\n[시뮬레이션 - 실제 전송되지 않음]";
+  $("familyMessage").textContent = msg;
+}
+
+function startDemo() {
+  if (!confirm(
+    "29일 완료 데모를 시작할까요? " +
+    "현재 기록은 유지되지만 데모 화면이 우선 표시됩니다."
+  )) return;
+
+  demoMode = true;
+  demoCompleted = false;
+  sessionStorage.removeItem("careloop_demo_reward");
+  localStorage.setItem(DEMO_KEY, "true");
+  renderGrapes();
+  alert("데모가 시작되었습니다. 복약 체크 후 저장해 보세요!");
+}
+
+function resetAll() {
+  if (!confirm(
+    "데모와 저장된 모든 건강 기록을 삭제할까요? " +
+    "이 작업은 되돌릴 수 없습니다."
+  )) return;
+
+  records = {};
+  demoMode = false;
+  demoCompleted = false;
+
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(DEMO_KEY);
+  localStorage.removeItem("careloop_real_reward");
+  sessionStorage.removeItem("careloop_demo_reward");
+
+  $("medCheck").checked = false;
+  $("painSlider").value = 2;
+  $("warningCheck").checked = false;
+  $("exerciseType").value = "";
+  $("exerciseDone").checked = false;
+  $("beforePain").value = 3;
+  $("afterPain").value = 3;
+
+  $("healthStatus").textContent = "";
+  $("rehabStatus").textContent = "";
+
+  updatePainDisplays();
+  renderGrapes();
+  renderRehab();
+  renderReport();
+  previewFamily();
+
+  alert("초기화되었습니다.");
+}
+
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => showTab(btn.dataset.tab));
+});
+
+["painSlider", "beforePain", "afterPain"].forEach(id => {
+  $(id).addEventListener("input", updatePainDisplays);
+});
+
+$("saveHealthBtn").addEventListener("click", submitDailyCheck);
+$("saveRehabBtn").addEventListener("click", saveRehab);
+$("copyReportBtn").addEventListener("click", copyReport);
+$("previewFamilyBtn").addEventListener("click", previewFamily);
+$("demoBtn").addEventListener("click", startDemo);
+$("resetBtn").addEventListener("click", resetAll);
+$("closeDoctorBtn").addEventListener("click", () =>
+  closeModal("doctorModal")
+);
+$("closeRewardBtn").addEventListener("click", closeReward);
+
+loadTodayInputs();
+renderGrapes();
+renderRehab();
+renderReport();
+previewFamily();
 </script>
 
 </body>
 </html>
+
